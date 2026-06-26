@@ -1,530 +1,2947 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Encuentra a tu amigo 🐾</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{
-    --rose:#F4646A;
-    --rose-light:#FFF0F0;
-    --rose-mid:#FDDCDC;
-    --cream:#FDF6F0;
-    --text:#2C1A1A;
-    --text-soft:#8A6F6F;
-    --white:#FFFFFF;
-    --card-radius:20px;
-    --chip-radius:50px;
-  }
-  body{
-    font-family:'Nunito',sans-serif;
-    background:var(--cream);
-    color:var(--text);
-    min-height:100vh;
-  }
-  .app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:90px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OBA y ConectaTuMundo🐾</title>
+  <meta name="description"
+    content="Encontrá a tu mejor amigo en Durazno, Uruguay. Plataforma de adopciones gratuitas y reportes de mascotas en la comunidad.">
 
-  /* HEADER */
-  .header{padding:28px 20px 12px;background:var(--cream)}
-  .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-  .greeting{font-size:13px;color:var(--text-soft);font-weight:600;letter-spacing:.3px}
-  .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#f5a623,#f0824e);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;flex-shrink:0}
-  .title{font-size:26px;font-weight:800;color:var(--text);line-height:1.2}
+  <!-- Google Fonts para tipografía Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
-  /* SEARCH */
-  .search-wrap{padding:12px 20px;display:flex;gap:10px;align-items:center}
-  .search-box{flex:1;display:flex;align-items:center;gap:10px;background:var(--white);border-radius:var(--chip-radius);padding:0 18px;height:48px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-  .search-box svg{flex-shrink:0;opacity:.4}
-  .search-box input{border:none;outline:none;font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);background:transparent;width:100%}
-  .search-box input::placeholder{color:#C0A8A8}
-  .filter-btn{width:48px;height:48px;border-radius:15px;background:var(--rose);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s}
-  .filter-btn:active{transform:scale(.95)}
+  <style>
+    /* ─── SISTEMA DE DISEÑO & VARIABLES ─── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      /* Eliminar tap highlight azul en móviles de forma global */
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  /* CHIPS */
-  .chips{display:flex;gap:10px;padding:0 20px 4px;overflow-x:auto;scrollbar-width:none}
-  .chips::-webkit-scrollbar{display:none}
-  .chip{padding:9px 20px;border-radius:var(--chip-radius);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
-  .chip.active{background:var(--rose);color:var(--white)}
-  .chip.inactive{background:var(--white);color:var(--text-soft);box-shadow:0 2px 8px rgba(0,0,0,.07)}
+    :root {
+      /* Colores base - Inspirados en Escudo Durazno pero modernizados */
+      --azul-oscuro: #0B1B3D;
+      --azul-primary: #1E3A8A;
+      --azul-light: #3B82F6;
+      --azul-pale: #EFF6FF;
+      --amarillo: #F59E0B;
+      --amarillo-dark: #D97706;
+      --amarillo-pale: #FEF3C7;
+      --blanco: #FFFFFF;
+      --texto: #1E293B;
+      --texto-soft: #64748B;
+      --texto-light: #94A3B8;
+      --fondo: #F8FAFC;
+      --card-bg: #FFFFFF;
 
-  /* SECTION */
-  .section-header{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 14px}
-  .section-title{font-size:18px;font-weight:800;color:var(--text)}
-  .ver-todo{font-size:14px;font-weight:700;color:var(--rose);cursor:pointer}
+      /* Colores semánticos */
+      --rose: #E11D48;
+      --rose-light: #FFE4E6;
+      --green: #10B981;
+      --green-light: #D1FAE5;
 
-  /* FEATURED CARD */
-  .featured-scroll{display:flex;gap:16px;padding:0 20px 8px;overflow-x:auto;scrollbar-width:none}
-  .featured-scroll::-webkit-scrollbar{display:none}
-  .featured-card{position:relative;min-width:280px;height:200px;border-radius:var(--card-radius);overflow:hidden;flex-shrink:0;cursor:pointer}
-  .featured-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
-  .featured-card:hover img{transform:scale(1.04)}
-  .featured-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);padding:18px 16px 14px}
-  .featured-name{font-size:20px;font-weight:800;color:#fff;line-height:1}
-  .featured-breed{font-size:13px;color:rgba(255,255,255,.82);margin-top:2px}
-  .featured-meta{display:flex;align-items:center;gap:6px;margin-top:6px}
-  .featured-meta svg{opacity:.75}
-  .featured-meta span{font-size:12px;color:rgba(255,255,255,.8);font-weight:600}
-  .featured-badge{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.95);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-  .adoption-tag{position:absolute;bottom:14px;right:14px;background:var(--rose);color:#fff;font-size:12px;font-weight:800;border-radius:var(--chip-radius);padding:7px 14px;letter-spacing:.3px}
+      /* Sombras y bordes */
+      --borde: rgba(30, 58, 138, 0.08);
+      --sombra-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --sombra: 0 8px 30px rgba(15, 23, 42, 0.06);
+      --sombra-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
 
-  /* NEARBY CARDS */
-  .nearby-list{display:flex;flex-direction:column;gap:14px;padding:0 20px}
-  .nearby-card{background:var(--white);border-radius:var(--card-radius);padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 12px rgba(0,0,0,.05)}
-  .nearby-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
-  .nearby-img{width:70px;height:70px;border-radius:15px;object-fit:cover;flex-shrink:0;background:#eee}
-  .nearby-info{flex:1;min-width:0}
-  .nearby-name{font-size:16px;font-weight:800;color:var(--text)}
-  .nearby-breed{font-size:13px;color:var(--text-soft);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .nearby-meta{display:flex;align-items:center;gap:4px;margin-top:6px}
-  .nearby-meta svg{opacity:.5;flex-shrink:0}
-  .nearby-meta span{font-size:12px;color:var(--text-soft);font-weight:600}
-  .nearby-free{font-size:12px;font-weight:800;color:var(--rose);margin-top:2px}
-  .nearby-heart{flex-shrink:0;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;align-self:flex-start}
-  .nearby-heart svg{fill:none;stroke:#ddd;stroke-width:2;transition:all .2s}
-  .nearby-heart.liked svg{fill:var(--rose);stroke:var(--rose)}
+      /* Radios y alturas */
+      --r-card: 24px;
+      --r-chip: 100px;
+      --nav-h: 72px;
 
-  /* BOTTOM NAV */
-  .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--white);border-top:1.5px solid rgba(0,0,0,.06);display:flex;align-items:center;justify-content:space-around;padding:10px 0 18px;z-index:100}
-  .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:0 16px}
-  .nav-label{font-size:11px;font-weight:700;color:#C0A8A8}
-  .nav-item.active .nav-label{color:var(--rose)}
-  .nav-active-dot{width:28px;height:28px;border-radius:50%;background:var(--rose);display:flex;align-items:center;justify-content:center}
-  .nav-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+      /* Transiciones */
+      --t-speed: 0.3s;
+      --easing: cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-  /* LOADING / EMPTY / ERROR */
-  .state-msg{text-align:center;padding:40px 20px;color:var(--text-soft);font-size:15px;font-weight:600;line-height:1.6}
-  .state-msg a{color:var(--rose);text-decoration:none;font-weight:700}
-  .loader{display:flex;justify-content:center;padding:30px}
-  .spinner{width:36px;height:36px;border:3px solid var(--rose-mid);border-top-color:var(--rose);border-radius:50%;animation:spin .7s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
+    html {
+      scroll-behavior: smooth;
+    }
 
-  /* MODAL */
-  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
-  .modal-bg.open{opacity:1;pointer-events:all}
-  .modal{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;transform:translateY(40px);transition:transform .3s}
-  .modal-bg.open .modal{transform:translateY(0)}
-  .modal-img{width:100%;height:260px;object-fit:cover;border-radius:20px 20px 0 0;display:block}
-  .modal-body{padding:22px 22px 0}
-  .modal-wrap{position:relative}
-  .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.95);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);z-index:10}
-  .modal-name{font-size:26px;font-weight:800;color:var(--text)}
-  .modal-breed{font-size:15px;color:var(--text-soft);margin-top:2px;font-weight:600}
-  .modal-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-  .modal-tag{background:var(--rose-light);color:var(--rose);padding:6px 14px;border-radius:var(--chip-radius);font-size:13px;font-weight:700}
-  .modal-desc{margin-top:16px;font-size:15px;line-height:1.7;color:var(--text-soft);font-weight:600;padding-bottom:4px}
-  .modal-adopt-btn{display:block;margin:22px auto 0;width:calc(100% - 44px);background:var(--rose);color:#fff;border:none;border-radius:var(--chip-radius);padding:16px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:transform .15s,opacity .15s;letter-spacing:.3px;margin-bottom:32px}
-  .modal-adopt-btn:hover{opacity:.9}
-  .modal-adopt-btn:active{transform:scale(.98)}
-  .badge-estado{display:inline-block;padding:4px 12px;border-radius:var(--chip-radius);font-size:12px;font-weight:700;margin-bottom:8px}
-  .badge-disponible{background:#e8f9ef;color:#2d9451}
-  .badge-adoptado{background:#f0f0f0;color:#999}
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: calc(var(--nav-h) + 16px);
+    }
 
-  /* BANNER CORS WARNING */
-  .cors-banner{background:#fff8e1;border-left:4px solid #f5a623;padding:14px 18px;margin:0 20px 16px;border-radius:12px;font-size:13px;color:#7a5c00;font-weight:600;line-height:1.6}
-  .cors-banner strong{display:block;margin-bottom:4px;font-size:14px}
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--azul-oscuro);
+    }
 
-  @media(max-width:380px){
-    .title{font-size:22px}
-    .featured-card{min-width:240px;height:180px}
-  }
-</style>
-</head>
-<body>
-<div class="app">
+    /* Ocultar barra de scroll global pero mantener funcionalidad */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
 
-  <div class="header">
-    <div class="header-top">
-      <div>
-        <div class="greeting">¡Hola!</div>
-        <div class="title">Encuentra a tu<br>amigo 🐾</div>
-      </div>
-      <div class="avatar">🐾</div>
-    </div>
-  </div>
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-  <div class="search-wrap">
-    <div class="search-box">
-      <svg width="18" height="18" fill="none" stroke="#2C1A1A" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="searchInput" placeholder="Buscar mascotas..." oninput="applyFilters()">
-    </div>
-    <button class="filter-btn" onclick="clearSearch()" title="Limpiar búsqueda">
-      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
-    </button>
-  </div>
+    ::-webkit-scrollbar-thumb {
+      background: var(--texto-light);
+      border-radius: var(--r-chip);
+    }
 
-  <div class="chips" id="chips">
-    <button class="chip active" onclick="setFilter('Todos',this)">Todos</button>
-    <button class="chip inactive" onclick="setFilter('Perro',this)">🐶 Perros</button>
-    <button class="chip inactive" onclick="setFilter('Gato',this)">🐱 Gatos</button>
-    <button class="chip inactive" onclick="setFilter('Otro',this)">🐾 Otros</button>
-  </div>
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--texto-soft);
+    }
 
-  <div id="corsWarning" style="display:none" class="cors-banner">
-    <strong>⚠️ Abriste el archivo directo (file://)</strong>
-    Para cargar datos desde Google Sheets necesitás un servidor local.<br>
-    En VS Code instalá <strong>Live Server</strong> → clic derecho en el archivo → <em>"Open with Live Server"</em>
-  </div>
+    /* ─── APP CONTAINER (MAQUETACIÓN MÓVIL / RESPONSIVE ESCRITORIO) ─── */
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--fondo);
+      position: relative;
+    }
 
-  <div id="featuredSection">
-    <div class="section-header">
-      <span class="section-title">Destacado</span>
-      <span class="ver-todo" onclick="showAll()">Ver todo</span>
-    </div>
-    <div class="featured-scroll" id="featuredScroll">
-      <div class="loader"><div class="spinner"></div></div>
-    </div>
-  </div>
+    /* Contenedor centrado para Desktop */
+    .content-wrapper {
+      width: 100%;
+      margin: 0 auto;
+    }
 
-  <div id="nearbySection">
-    <div class="section-header">
-      <span class="section-title" id="nearbyTitle">Todos disponibles</span>
-    </div>
-    <div class="nearby-list" id="nearbyList"></div>
-  </div>
+    /* ─── HEADER COMÚN PARA SECCIONES (PREPARADO PARA IMAGEN DE FONDO) ─── */
+    .section-header-banner {
+      /* Soporte para imagen de fondo opcional 'banner-bg.png' provista por el usuario */
+      background: linear-gradient(135deg, rgba(11, 27, 61, 8.5) 0%, rgba(30, 58, 138, 0.6) 100%), url('banner-bg.png') center/cover no-repeat;
+      padding: 40px 24px 32px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 32px 32px;
+      box-shadow: var(--sombra);
+    }
 
-</div>
+    .section-header-banner::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(245, 158, 11, 0.15);
+      pointer-events: none;
+      filter: blur(10px);
+    }
 
-<!-- Modal detalle -->
-<div class="modal-bg" id="modalBg" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <div class="modal-wrap">
-      <img id="modalImg" src="" alt="" class="modal-img"
-           onerror="this.src='https://placehold.co/480x260/FDF6F0/F4646A?text=🐾'">
-      <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    </div>
-    <div class="modal-body">
-      <span id="modalEstado" class="badge-estado badge-disponible"></span>
-      <div id="modalName" class="modal-name"></div>
-      <div id="modalBreed" class="modal-breed"></div>
-      <div class="modal-tags" id="modalTags"></div>
-      <div id="modalDesc" class="modal-desc"></div>
-    </div>
-    <button class="modal-adopt-btn" id="modalBtn">🐾 Quiero adoptarlo — ¡Es gratis!</button>
-  </div>
-</div>
+    .section-header-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -40px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
 
-<!-- Bottom Nav -->
-<div class="bottom-nav">
-  <div class="nav-item active">
-    <div class="nav-active-dot">
-      <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    </div>
-    <span class="nav-label" style="color:var(--rose)">Inicio</span>
-  </div>
-  <div class="nav-item" onclick="showFavorites()">
-    <div class="nav-icon"><svg width="22" height="22" fill="none" stroke="#C0A8A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-    <span class="nav-label">Favoritos</span>
-  </div>
-  <div class="nav-item">
-    <div class="nav-icon"><svg width="22" height="22" fill="none" stroke="#C0A8A8" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-    <span class="nav-label">Mensajes</span>
-  </div>
-  <div class="nav-item">
-    <div class="nav-icon"><svg width="22" height="22" fill="none" stroke="#C0A8A8" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg></div>
-    <span class="nav-label">Alertas</span>
-  </div>
-  <div class="nav-item">
-    <div class="nav-icon"><svg width="22" height="22" fill="none" stroke="#C0A8A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-    <span class="nav-label">Perfil</span>
-  </div>
-</div>
+    .banner-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--blanco);
+      line-height: 1.2;
+    }
 
-<script>
-// ─── CONFIGURACIÓN ──────────────────────────────────────────────
-const SHEET_ID = '2PACX-1vTIF_ruPvtTTRTgYdFGQ3z65JNGM-2TvNCdGAexzlExqP2H-mgg0xPDoFDQT81jwLKi8NFTJEoXJpn-';
-const CSV_URL  = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?gid=0&single=true&output=csv`;
+    .banner-title span {
+      color: var(--amarillo);
+    }
 
-// Información de contacto del refugio — editá esto:
-const CONTACTO = 'WhatsApp: +598 XXXXXXXX o escribinos al mail del refugio.';
-// ────────────────────────────────────────────────────────────────
+    .banner-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
 
-let allPets    = [];
-let filtered   = [];
-let currentFilter = 'Todos';
-let likedSet   = new Set();
-let currentPet = null;
+    /* ─── TABS ROUTING (SPA VISIBILITY) ─── */
+    .tab-content {
+      display: none;
+    }
 
-// Detectar si se abre como file:// (CORS issue)
-if (location.protocol === 'file:') {
-  document.getElementById('corsWarning').style.display = 'block';
-}
+    .tab-content.active {
+      display: block;
+      animation: tabFadeUp var(--t-speed) var(--easing) forwards;
+    }
 
-// ─── CSV helpers ─────────────────────────────────────────────────
-function smartSplit(line) {
-  const result = []; let cur = ''; let inQ = false;
-  for (const c of line) {
-    if (c === '"') { inQ = !inQ; }
-    else if (c === ',' && !inQ) { result.push(cur); cur = ''; }
-    else { cur += c; }
-  }
-  result.push(cur);
-  return result;
-}
-
-function parseCSV(text) {
-  const lines = text.trim().split(/\r?\n/);
-  if (lines.length < 2) return [];
-  const raw = smartSplit(lines[0]);
-  // La columna A está vacía → ignorar índice 0
-  const headers = raw.map(h => h.replace(/^"|"$/g,'').trim().toLowerCase());
-  const result = [];
-  for (let i = 1; i < lines.length; i++) {
-    const row = smartSplit(lines[i]);
-    const obj = {};
-    headers.forEach((h, idx) => {
-      obj[h] = (row[idx] || '').replace(/^"|"$/g,'').trim();
-    });
-    // "nombre" es la col B (índice 1 en headers porque A está vacía)
-    const nombre = obj['nombre'] || obj[''] || '';
-    if (!nombre) continue;
-    obj.nombre = nombre;
-    result.push(obj);
-  }
-  return result;
-}
-
-function detectSpecies(r) {
-  const haystack = JSON.stringify(r).toLowerCase();
-  if (/\bperr|\bdog|\bcanin|\bcachorro/.test(haystack)) return 'Perro';
-  if (/\bgat|\bcat|\bfelin|\bkitten/.test(haystack)) return 'Gato';
-  return 'Otro';
-}
-
-function imgSrc(pet) {
-  return pet.imagen
-    || `https://placehold.co/300x200/FDDCDC/F4646A?text=🐾`;
-}
-
-// ─── Carga de datos ───────────────────────────────────────────────
-async function loadPets() {
-  try {
-    const res  = await fetch(CSV_URL);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const text = await res.text();
-    const rows = parseCSV(text);
-
-    allPets = rows.map((r, i) => {
-      const estadoRaw = (r['estado'] || '').toLowerCase().trim();
-      // Cualquier mención de "adop" → disponible. "adoptado" sin "en" → ya adoptado.
-      let estado = 'disponible';
-      if (/\badoptado\b/.test(estadoRaw) && !/\ben\s+adop/.test(estadoRaw)) {
-        estado = 'adoptado';
+    @keyframes tabFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
       }
 
-      // Sexo: TRUE → Macho, FALSE → Hembra, cualquier otro valor lo muestra tal cual
-      const sexoRaw = (r['sexo'] || '').trim();
-      let sexo = sexoRaw;
-      if (sexoRaw.toUpperCase() === 'TRUE')  sexo = 'Macho';
-      if (sexoRaw.toUpperCase() === 'FALSE') sexo = 'Hembra';
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-      // Imagen: primero image_url_publica, luego image_url, si es ruta local la ignoramos
-      const imgRaw = r['image_url_publica'] || r['image_url'] || r['imagen'] || r['foto_url'] || '';
-      const imagen = imgRaw.startsWith('http') ? imgRaw : '';
+    /* ─── 1. PESTAÑA INICIO (#inicio) ─── */
+    .hero-box {
+      margin: 20px 24px;
+      background: var(--blanco);
+      border-radius: var(--r-card);
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      border: 1px solid var(--borde);
+    }
 
-      return {
-        id:          i,
-        nombre:      r['nombre']      || 'Sin nombre',
-        sexo,
-        edad:        r['edad']        || '',
-        imagen,
-        descripcion: r['descripcion'] || r['descripción'] || '',
-        estado,
-        especie:     detectSpecies(r),
+    .hero-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-body {
+      padding: 24px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--amarillo-pale);
+      color: var(--amarillo-dark);
+      border-radius: var(--r-chip);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-size: 22px;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--texto-soft);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .hero-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--azul-primary);
+      color: var(--blanco);
+      border: none;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .hero-btn:hover {
+      background: var(--azul-oscuro);
+    }
+
+    .hero-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Estadísticas */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 0 24px 24px;
+    }
+
+    .stat-card {
+      background: var(--blanco);
+      border-radius: var(--r-card);
+      padding: 16px 12px;
+      text-align: center;
+      box-shadow: var(--sombra-sm);
+      border: 1px solid var(--borde);
+    }
+
+    .stat-num {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--azul-primary);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--texto-soft);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Guía del proceso de adopción */
+    .process-section {
+      margin: 0 24px 28px;
+    }
+
+    .section-title-inline {
+      font-size: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .process-card {
+      background: var(--blanco);
+      border-radius: var(--r-card);
+      padding: 20px;
+      border: 1px solid var(--borde);
+      box-shadow: var(--sombra-sm);
+    }
+
+    .process-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .process-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 40px;
+      bottom: -20px;
+      width: 2px;
+      background: var(--azul-pale);
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      background: var(--azul-pale);
+      color: var(--azul-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .step-content {
+      padding-top: 4px;
+    }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--azul-oscuro);
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--texto-soft);
+      line-height: 1.5;
+    }
+
+    /* ─── 2. PESTAÑA MASCOTAS (#adopciones) ─── */
+    .search-section {
+      padding: 20px 24px 0;
+      margin-top: -16px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .search-box-wrap {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search-input-field {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--blanco);
+      border: 1.5px solid var(--borde);
+      border-radius: var(--r-chip);
+      padding: 0 18px;
+      height: 52px;
+      box-shadow: var(--sombra);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input-field:focus-within {
+      border-color: var(--azul-primary);
+      box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.12);
+    }
+
+    .search-input-field svg {
+      opacity: 0.5;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+
+    .search-input-field:focus-within svg {
+      opacity: 0.8;
+      stroke: var(--azul-primary);
+    }
+
+    .search-input-field input {
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--texto);
+      width: 100%;
+      background: transparent;
+      font-weight: 600;
+    }
+
+    .search-input-field input::placeholder {
+      color: var(--texto-light);
+    }
+
+    .clear-search-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: var(--amarillo);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--sombra);
+      transition: transform 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .clear-search-btn:hover {
+      background: var(--amarillo-dark);
+    }
+
+    .clear-search-btn:active {
+      transform: scale(0.93);
+    }
+
+    /* Filtros Rápidos (Chips) */
+    .chips-section {
+      padding: 16px 24px 8px;
+    }
+
+    .chips-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .chips-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip {
+      padding: 10px 20px;
+      border-radius: var(--r-chip);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .filter-chip.active {
+      background: var(--azul-primary);
+      color: var(--blanco);
+      border-color: var(--azul-primary);
+      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+    }
+
+    .filter-chip.inactive {
+      background: var(--blanco);
+      color: var(--texto-soft);
+      border-color: var(--borde);
+      box-shadow: var(--sombra-sm);
+    }
+
+    .filter-chip.inactive:hover {
+      border-color: var(--texto-light);
+      color: var(--texto);
+    }
+
+    /* Filtros Avanzados (Dropdowns) */
+    .advanced-filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 4px 24px 16px;
+    }
+
+    .select-wrap {
+      position: relative;
+    }
+
+    .select-wrap select {
+      width: 100%;
+      height: 44px;
+      border-radius: 14px;
+      border: 1.5px solid var(--borde);
+      background: var(--blanco);
+      padding: 0 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--texto-soft);
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      box-shadow: var(--sombra-sm);
+      transition: border-color 0.2s;
+    }
+
+    .select-wrap select:focus {
+      border-color: var(--azul-primary);
+      color: var(--texto);
+    }
+
+    .select-wrap::after {
+      content: '▼';
+      font-size: 9px;
+      color: var(--texto-light);
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* Grid de Mascotas */
+    .pets-section-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px 8px;
+    }
+
+    .pets-grid-title {
+      font-size: 18px;
+    }
+
+    .pets-count-badge {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--azul-primary);
+      background: var(--azul-pale);
+      padding: 4px 12px;
+      border-radius: var(--r-chip);
+    }
+
+    .featured-carousel-title {
+      padding: 16px 24px 8px;
+      font-size: 18px;
+    }
+
+    .featured-carousel {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 0 24px 16px;
+      scrollbar-width: none;
+    }
+
+    .featured-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .featured-card {
+      position: relative;
+      min-width: 290px;
+      height: 220px;
+      border-radius: var(--r-card);
+      overflow: hidden;
+      flex-shrink: 0;
+      cursor: pointer;
+      box-shadow: var(--sombra-lg);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: transform 0.3s var(--easing), box-shadow 0.3s;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.18);
+    }
+
+    .featured-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s var(--easing);
+    }
+
+    .featured-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .featured-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(11, 27, 61, 0.95) 0%, rgba(11, 27, 61, 0.4) 60%, transparent 100%);
+      padding: 24px 20px 16px;
+    }
+
+    .featured-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--blanco);
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .featured-details {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+    }
+
+    .featured-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .featured-meta span {
+      font-size: 12px;
+      color: var(--amarillo);
+      font-weight: 800;
+    }
+
+    /* Corazón favoritos en destacados */
+    .favorite-badge-circle {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s var(--easing), background 0.2s;
+      z-index: 5;
+      border: none;
+      outline: none;
+    }
+
+    .favorite-badge-circle:hover {
+      transform: scale(1.1);
+      background: var(--blanco);
+    }
+
+    .favorite-badge-circle:active {
+      transform: scale(0.9);
+    }
+
+    .favorite-badge-circle svg {
+      fill: none;
+      stroke: var(--texto-soft);
+      stroke-width: 2.5;
+      transition: fill 0.2s, stroke 0.2s;
+    }
+
+    .favorite-badge-circle.liked svg {
+      fill: var(--rose);
+      stroke: var(--rose);
+    }
+
+    .ad-tag-top {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--amarillo);
+      color: var(--azul-oscuro);
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: var(--r-chip);
+      padding: 5px 12px;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+      letter-spacing: 0.2px;
+    }
+
+    /* Lista general de mascotas */
+    .pets-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 0 24px 24px;
+    }
+
+    .pet-card {
+      background: var(--card-bg);
+      border-radius: var(--r-card);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      box-shadow: var(--sombra-sm);
+      border: 1px solid var(--borde);
+      position: relative;
+    }
+
+    .pet-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--sombra);
+      border-color: rgba(30, 58, 138, 0.15);
+    }
+
+    .pet-card-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--azul-pale);
+      border: 2px solid var(--azul-pale);
+    }
+
+    .pet-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pet-card-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--azul-oscuro);
+      margin-bottom: 2px;
+    }
+
+    .pet-card-breed {
+      font-size: 13px;
+      color: var(--texto-soft);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pet-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--texto-light);
+      font-weight: 700;
+    }
+
+    .pet-card-status {
+      font-size: 11px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .pet-card-status.disponible {
+      color: var(--green);
+    }
+
+    .pet-card-status.adoptado {
+      color: var(--texto-light);
+      text-decoration: line-through;
+    }
+
+    .pet-card-heart {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--azul-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      align-self: flex-start;
+      border: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .pet-card-heart:hover {
+      background: rgba(30, 58, 138, 0.1);
+    }
+
+    .pet-card-heart:active {
+      transform: scale(0.85);
+    }
+
+    .pet-card-heart svg {
+      fill: none;
+      stroke: var(--azul-primary);
+      stroke-width: 2.2;
+      transition: fill 0.2s, stroke 0.2s;
+    }
+
+    .pet-card-heart.liked {
+      background: var(--rose-light);
+    }
+
+    .pet-card-heart.liked svg {
+      fill: var(--rose);
+      stroke: var(--rose);
+    }
+
+    /* ─── 3. PESTAÑA ALERTAS (#alertas) ─── */
+    .alerts-intro {
+      padding: 24px 24px 12px;
+      font-size: 14px;
+      color: var(--texto-soft);
+      line-height: 1.6;
+    }
+
+    .alerts-intro strong {
+      color: var(--azul-oscuro);
+    }
+
+    .report-card-btn {
+      background: linear-gradient(135deg, var(--amarillo) 0%, var(--amarillo-dark) 100%);
+      color: var(--azul-oscuro);
+      margin: 0 24px 20px;
+      padding: 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: var(--sombra);
+      border: none;
+      font-size: 15px;
+      width: calc(100% - 48px);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .report-card-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Formulario Reportar Mascota (Colapsable) */
+    .report-form-container {
+      display: none;
+      margin: 0 24px 24px;
+      background: var(--blanco);
+      border-radius: var(--r-card);
+      padding: 24px;
+      border: 1px solid var(--borde);
+      box-shadow: var(--sombra);
+      animation: tabFadeUp 0.3s var(--easing) forwards;
+    }
+
+    .report-form-container.open {
+      display: block;
+    }
+
+    .form-title {
+      font-size: 18px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .close-form-x {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: var(--texto-soft);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--azul-oscuro);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1.5px solid var(--borde);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      color: var(--texto);
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--azul-primary);
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .submit-report-btn {
+      width: 100%;
+      background: var(--azul-primary);
+      color: var(--blanco);
+      border: none;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+      transition: background 0.2s;
+    }
+
+    .submit-report-btn:hover {
+      background: var(--azul-oscuro);
+    }
+
+    /* Listado de Alertas */
+    .alerts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 0 24px 24px;
+    }
+
+    .alert-item-card {
+      background: var(--blanco);
+      border-radius: var(--r-card);
+      padding: 16px;
+      border: 1px solid var(--borde);
+      box-shadow: var(--sombra-sm);
+    }
+
+    .alert-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .alert-status-pill {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--r-chip);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .alert-status-pill.perdido {
+      background: var(--rose-light);
+      color: var(--rose);
+    }
+
+    .alert-status-pill.encontrado {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .alert-date {
+      font-size: 11px;
+      color: var(--texto-light);
+      font-weight: 700;
+    }
+
+    .alert-body-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .alert-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--azul-pale);
+    }
+
+    .alert-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .alert-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--azul-oscuro);
+      margin-bottom: 2px;
+    }
+
+    .alert-info-row {
+      font-size: 12px;
+      color: var(--texto-soft);
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .alert-desc {
+      font-size: 13px;
+      color: var(--texto-soft);
+      line-height: 1.5;
+    }
+
+    .alert-contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--azul-primary);
+      background: var(--azul-pale);
+      padding: 6px 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+
+    .alert-contact-btn:hover {
+      background: rgba(30, 58, 138, 0.12);
+    }
+
+    /* ─── 4. PESTAÑA INFORMACIÓN (#informacion) ─── */
+    .info-list {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .info-accordion {
+      background: var(--blanco);
+      border-radius: var(--r-card);
+      border: 1px solid var(--borde);
+      box-shadow: var(--sombra-sm);
+      overflow: hidden;
+    }
+
+    .info-accordion-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .info-accordion-header:hover {
+      background: var(--azul-pale);
+    }
+
+    .info-accordion-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--azul-oscuro);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-accordion-title svg {
+      color: var(--azul-primary);
+      flex-shrink: 0;
+    }
+
+    .info-accordion-arrow {
+      font-size: 11px;
+      color: var(--texto-soft);
+      transition: transform 0.3s;
+    }
+
+    .info-accordion.open .info-accordion-arrow {
+      transform: rotate(180deg);
+    }
+
+    .info-accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, padding 0.3s;
+      padding: 0 20px;
+      font-size: 13px;
+      color: var(--texto-soft);
+      line-height: 1.6;
+    }
+
+    .info-accordion.open .info-accordion-content {
+      max-height: 500px;
+      /* Suficiente para el texto */
+      padding: 0 20px 20px;
+    }
+
+    .info-accordion-content p {
+      margin-bottom: 12px;
+    }
+
+    .info-accordion-content ul {
+      margin-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .info-accordion-content li {
+      margin-bottom: 6px;
+    }
+
+    /* ─── 5. PESTAÑA NOSOTROS / AYUDA (#nosotros) ─── */
+    .about-card {
+      background: var(--blanco);
+      border-radius: var(--r-card);
+      padding: 24px;
+      margin: 24px;
+      border: 1px solid var(--borde);
+      box-shadow: var(--sombra-sm);
+    }
+
+    .about-text {
+      font-size: 14px;
+      color: var(--texto-soft);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .about-text strong {
+      color: var(--azul-oscuro);
+    }
+
+    /* Cuentas de Donación */
+    .donation-section-title {
+      padding: 0 24px 8px;
+      font-size: 18px;
+    }
+
+    .donation-cards-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 0 24px 24px;
+    }
+
+    .donation-card {
+      background: var(--blanco);
+      border-radius: var(--r-card);
+      padding: 20px;
+      border: 1.5px solid var(--borde);
+      box-shadow: var(--sombra-sm);
+      position: relative;
+    }
+
+    .donation-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .donation-bank-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--azul-oscuro);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .donation-data-row {
+      background: var(--fondo);
+      padding: 12px 14px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .data-text {
+      font-size: 12px;
+      font-family: monospace;
+      color: var(--texto);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .copy-btn {
+      background: var(--azul-pale);
+      border: none;
+      color: var(--azul-primary);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(30, 58, 138, 0.12);
+    }
+
+    .copy-btn:active {
+      transform: scale(0.93);
+    }
+
+    /* Puntos de Recolección */
+    .recollection-box {
+      background: var(--amarillo-pale);
+      border-left: 5px solid var(--amarillo);
+      padding: 18px;
+      margin: 0 24px 24px;
+      border-radius: 0 16px 16px 0;
+      font-size: 13px;
+      color: var(--amarillo-dark);
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .recollection-box strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: var(--azul-oscuro);
+    }
+
+    /* ─── MODAL DETALLE DE MASCOTA (GLASSMORPHISM CENTRADO) ─── */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 27, 61, 0.45);
+      /* Oscurecido traslúcido */
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      /* Centrado en móviles y escritorio */
+      justify-content: center;
+      /* Centrado horizontal */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--easing);
+      backdrop-filter: blur(12px);
+      /* Difuminado vidrioso de fondo */
+      -webkit-backdrop-filter: blur(12px);
+      padding: 20px;
+    }
+
+    .modal-bg.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: rgba(255, 255, 255, 0.85);
+      /* Fondo vidrioso traslúcido */
+      backdrop-filter: blur(28px);
+      /* Filtro de desenfoque premium */
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      /* Resplandor de borde blanco */
+      border-radius: 28px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: scale(0.9) translateY(15px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: var(--sombra-lg);
+    }
+
+    .modal-bg.open .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-img-wrap {
+      position: relative;
+      height: 250px;
+      background: var(--azul-pale);
+      border-radius: 28px 28px 0 0;
+      overflow: hidden;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: var(--azul-oscuro);
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .modal-close:hover {
+      transform: scale(1.1);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-estado-tag {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: var(--r-chip);
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-estado-tag.disponible {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .modal-estado-tag.adoptado {
+      background: var(--azul-pale);
+      color: var(--texto-soft);
+    }
+
+    .modal-name {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--azul-oscuro);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .modal-breed {
+      font-size: 14px;
+      color: var(--texto-soft);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .modal-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .modal-tag {
+      background: rgba(30, 58, 138, 0.05);
+      color: var(--azul-primary);
+      padding: 6px 14px;
+      border-radius: var(--r-chip);
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid rgba(30, 58, 138, 0.08);
+    }
+
+    .modal-desc-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--azul-oscuro);
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--texto-soft);
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .modal-btn-adopt {
+      width: 100%;
+      background: linear-gradient(135deg, var(--azul-primary) 0%, var(--azul-light) 100%);
+      color: var(--blanco);
+      border: none;
+      padding: 16px;
+      border-radius: 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(30, 58, 138, 0.25);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .modal-btn-adopt:hover {
+      opacity: 0.95;
+    }
+
+    .modal-btn-adopt:active {
+      transform: scale(0.98);
+    }
+
+    /* ─── WARNING/FALLBACK BANNER ─── */
+    .fallback-banner {
+      background: var(--amarillo-pale);
+      border-left: 4px solid var(--amarillo);
+      padding: 14px 18px;
+      margin: 16px 24px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: var(--amarillo-dark);
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .fallback-banner strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: var(--azul-oscuro);
+    }
+
+    /* ─── BOTTOM NAVIGATION BAR (MOBILE FOCUSED) ─── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid var(--borde);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px 0 calc(env(safe-area-inset-bottom) + 12px);
+      z-index: 100;
+      box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      flex: 1;
+      transition: opacity 0.2s;
+    }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--texto-soft);
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .nav-icon svg {
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .nav-item.active .nav-icon {
+      color: var(--azul-primary);
+      transform: translateY(-2px);
+    }
+
+    .nav-item.active .nav-label {
+      color: var(--azul-primary);
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--texto-soft);
+      transition: color 0.2s;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 96px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      background: var(--azul-oscuro);
+      color: var(--blanco);
+      padding: 14px 24px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 700;
+      z-index: 1000;
+      box-shadow: var(--sombra-lg);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+      white-space: nowrap;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+
+    /* ─── ESTADOS DE CARGA / ERROR / VACÍOS ─── */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--texto-soft);
+    }
+
+    .empty-state svg {
+      color: var(--texto-light);
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
+    .empty-state p {
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .spinner-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .spinner-ring {
+      width: 40px;
+      height: 40px;
+      border: 3.5px solid var(--azul-pale);
+      border-top-color: var(--azul-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ═══ VISTA DE ESCRITORIO (MIN-WIDTH: 540PX) ═══ */
+    @media (min-width: 540px) {
+      .app-container {
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 40px;
+      }
+
+      .content-wrapper {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+
+      .section-header-banner {
+        padding: 64px 0 48px;
+        border-radius: 0 0 40px 40px;
+      }
+
+      .banner-title {
+        font-size: 40px;
+      }
+
+      .hero-box {
+        margin: 40px auto;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        height: 320px;
+        max-width: 1120px;
+      }
+
+      .hero-img {
+        height: 100%;
+      }
+
+      .hero-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 32px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin: 0 auto 40px;
+        max-width: 1120px;
+      }
+
+      .process-section {
+        margin: 0 auto 48px;
+        max-width: 1120px;
+      }
+
+      .process-card {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        padding: 36px;
+      }
+
+      .process-step {
+        margin-bottom: 0;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .process-step:not(:last-child)::before {
+        left: 60%;
+        top: 20px;
+        width: 80%;
+        height: 2px;
+      }
+
+      .search-section {
+        padding: 32px 0 0;
+        max-width: 1120px;
+        margin: -24px auto 0;
+      }
+
+      .chips-section {
+        padding: 24px 0 12px;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .advanced-filters {
+        padding: 4px 0 24px;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .pets-section-title-wrap {
+        padding: 20px 0 12px;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .featured-carousel-title {
+        padding: 24px 0 12px;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .featured-carousel {
+        padding: 0 0 28px;
+        gap: 24px;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .featured-card {
+        min-width: 360px;
+        height: 240px;
+      }
+
+      /* Grid responsivo de mascotas en desktop */
+      .pets-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 0 0 48px;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .about-card,
+      .recollection-box,
+      .report-form-container {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1120px;
+      }
+
+      .donation-section-title {
+        padding-left: 0;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .donation-cards-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        padding: 0 0 48px;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      .donation-card {
+        margin-bottom: 0;
+      }
+
+      .alerts-intro,
+      .report-card-btn,
+      .alerts-list {
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 1120px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .report-card-btn {
+        width: 100%;
+      }
+
+      .info-list {
+        padding: 32px 0;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      /* Barra de navegación superior (Full-Width) */
+      .bottom-nav {
+        max-width: none;
+        width: 100%;
+        top: 0;
+        bottom: auto;
+        left: 0;
+        transform: none;
+        border-top: none;
+        border-bottom: 1px solid var(--borde);
+        box-shadow: var(--sombra-sm);
+        height: 68px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      .nav-wrapper {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 100%;
+        padding: 0 40px;
+      }
+
+      .nav-item {
+        flex-direction: row;
+        gap: 8px;
+        padding: 0 20px;
+        height: 100%;
+        flex: 0 0 auto;
+        border-bottom: 3.5px solid transparent;
+        transition: border-color 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-item.active {
+        border-bottom-color: var(--azul-primary);
+      }
+
+      .nav-item.active .nav-icon {
+        transform: none;
+      }
+
+      .nav-label {
+        font-size: 13px;
+      }
+
+      body {
+        padding-top: 68px;
+        padding-bottom: 40px;
+      }
+
+      .fallback-banner {
+        max-width: 1120px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .pets-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .pets-list {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-container">
+
+    <!-- BANNER DE FALLBACK / ADVERTENCIA CORS -->
+    <div id="corsWarning" style="display:none" class="fallback-banner">
+      <strong>💡 Modo Offline Activo (file://)</strong>
+      Para cargar datos en tiempo real desde Google Sheets, la página necesita abrirse en un servidor local. Se están
+      mostrando las mascotas guardadas en la memoria del sitio.
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+       1. PESTAÑA INICIO (#inicio)
+       ───────────────────────────────────────────────────────────────── -->
+    <div id="inicio" class="tab-content">
+      <div class="section-header-banner">
+        <div class="content-wrapper">
+          <div class="banner-subtitle">
+  <span font-size="1.5em" font-weight: bold; style="color: #ff7a00;">O</span>rganizacion de
+  <span font-weight: bold; style="color:  #ff7a00;">B</span>ienestar
+  <span  font-weight: bold; style="color: #ff7a00;">A</span>nimal
+</div>
+          <h1 class="banner-title">Encontrá a tu<br><span>compañero de vida</span> 🐾</h1>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <div class="hero-box">
+          <!-- El usuario elegirá la imagen, mantenemos una neutra de Unsplash por defecto -->
+          <img src="header.jpg"
+            alt="Mascota para adopción" class="hero-img" id="heroImg">
+          <div class="hero-body">
+            <span class="hero-badge">ADOPCIÓN RESPONSABLE</span>
+            <h2 class="hero-title">Dale una segunda oportunidad a un amigo</h2>
+            <p class="hero-desc">Hay decenas de animales esperando un hogar cálido en Durazno. La adopción es 100%
+              gratuita y salva lives.</p>
+            <button class="hero-btn" onclick="navigateToTab('adopciones')">
+              Ver mascotas disponibles 🐶
+            </button>
+          </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-num" id="statAdoptados">150+</div>
+            <div class="stat-label">Adoptados</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="statDisponibles">--</div>
+            <div class="stat-label">Disponibles</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Gratuito</div>
+          </div>
+        </div>
+
+        <!-- Proceso -->
+        <div class="process-section">
+          <h2 class="section-title-inline">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v4l3 3" />
+            </svg>
+            ¿Cómo es el proceso?
+          </h2>
+          <div class="process-card">
+            <div class="process-step">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h3 class="step-title">Elegí tu compañero</h3>
+                <p class="step-desc">Explorá las fotos, detalles e historia de las mascotas.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h3 class="step-title">Ponete en contacto</h3>
+                <p class="step-desc">Hacé clic en el botón de WhatsApp para hablar directo con su responsable.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h3 class="step-title">¡Mudate con ella/él!</h3>
+                <p class="step-desc">Empezá una nueva aventura junto a tu nuevo compañero.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+       2. PESTAÑA MASCOTAS (#adopciones)
+       ───────────────────────────────────────────────────────────────── -->
+    <div id="adopciones" class="tab-content">
+      <div class="section-header-banner">
+        <div class="content-wrapper">
+          <div class="banner-subtitle">Buscador y filtros</div>
+          <h1 class="banner-title">Mascotas en <span>Adopción</span> 🐶</h1>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <!-- Buscador -->
+        <div class="search-section">
+          <div class="search-box-wrap">
+            <div class="search-input-field">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input type="text" id="searchInput" placeholder="Buscar por nombre, descripción..."
+                oninput="applyFilters()">
+            </div>
+            <button class="clear-search-btn" onclick="clearSearch()" title="Limpiar filtros y búsqueda">
+              <svg width="20" height="20" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M19 7L5 21M5 7l14 14" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chips de Especies -->
+        <div class="chips-section">
+          <div class="chips-scroll" id="chipsContainer">
+            <button class="filter-chip active" onclick="setSpeciesFilter('Todos', this)">Todos</button>
+            <button class="filter-chip inactive" onclick="setSpeciesFilter('Perro', this)">🐶 Perros</button>
+            <button class="filter-chip inactive" onclick="setSpeciesFilter('Gato', this)">🐱 Gatos</button>
+            <button class="filter-chip inactive" onclick="setSpeciesFilter('Otro', this)">🐾 Otros</button>
+          </div>
+        </div>
+
+        <!-- Filtros Avanzados -->
+        <div class="advanced-filters">
+          <div class="select-wrap">
+            <select id="sexFilter" onchange="applyFilters()">
+              <option value="Todos">Sexo: Todos</option>
+              <option value="Macho">Macho</option>
+              <option value="Hembra">Hembra</option>
+            </select>
+          </div>
+          <div class="select-wrap">
+            <select id="statusFilter" onchange="applyFilters()">
+              <option value="Todos">Estado: Todos</option>
+              <option value="disponible">Disponibles</option>
+              <option value="adoptado">Ya adoptados</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Destacados -->
+        <div id="featuredHeader" class="featured-carousel-title">🔥 Casos Urgentes</div>
+        <div class="featured-carousel" id="featuredCarousel">
+          <div class="spinner-wrap">
+            <div class="spinner-ring"></div>
+          </div>
+        </div>
+
+        <!-- Lista General -->
+        <div class="pets-section-title-wrap">
+          <h2 class="pets-grid-title" id="listTitle">Mascotas Disponibles</h2>
+          <span class="pets-count-badge" id="petsCount">0</span>
+        </div>
+        <div class="pets-list" id="petsList">
+          <!-- Mascotas cargadas dinámicamente -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+       3. PESTAÑA ALERTAS (#alertas)
+  <!-- ───────────────────────────────────────────────────────────────── -->
+       <div id="alertas" class="tab-content">
+  <div class="section-header-banner">
+    <div class="content-wrapper">
+      <div class="banner-subtitle">Comunidad Durazno</div>
+      <h1 class="banner-title">🚧 <span>Funcionalidad en Construcción</span></h1>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    <div style="
+      text-align: center;
+      padding: 60px 20px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+      margin: 30px auto;
+      max-width: 700px;
+    ">
+      <div style="font-size: 70px;">🚧</div>
+      <h2 style="margin: 15px 0; color: #333;">
+        Ya nos encontramos trabajando en esta sección para que puedas recibir alertas y reportes de mascotas perdidas o encontradas en Durazno.
+      </h2>
+      <p style="font-size: 18px; color: #666; line-height: 1.6;">
+        Gracias por tu paciencia. ❤️🐾
+      </p>
+    </div>
+  </div>
+</div>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+       4. PESTAÑA INFORMACIÓN (#informacion)
+       ───────────────────────────────────────────────────────────────── -->
+    <div id="informacion" class="tab-content">
+      <div class="section-header-banner">
+        <div class="content-wrapper">
+          <div class="banner-subtitle">Guía de Tenencia Responsable</div>
+          <h1 class="banner-title">Consejos y <span>Salud Animal</span> 🩺</h1>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <div class="info-list">
+          <!-- Acordeón 1 -->
+          <div class="info-accordion" onclick="toggleAccordion(this)">
+            <div class="info-accordion-header">
+              <h2 class="info-accordion-title">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                Importancia de la Castración
+              </h2>
+              <span class="info-accordion-arrow">▼</span>
+            </div>
+            <div class="info-accordion-content">
+              <p>Castrar a nuestras mascotas no es solo un acto de control de la natalidad, sino una decisión
+                fundamental para su salud y bienestar.</p>
+              <ul>
+                <li><strong>En hembras:</strong> Previene infecciones uterinas graves y reduce el riesgo de tumores de
+                  mama si se realiza antes del primer celo.</li>
+                <li><strong>En machos:</strong> Previene el cáncer testicular y problemas de próstata. Además, reduce el
+                  marcado con orina y conductas territoriales/agresivas.</li>
+                <li><strong>Impacto social:</strong> Es la única herramienta humanitaria y efectiva para evitar el
+                  abandono masivo de cachorros y controlar la sobrepoblación callejera.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Acordeón 2 -->
+          <div class="info-accordion" onclick="toggleAccordion(this)">
+            <div class="info-accordion-header">
+              <h2 class="info-accordion-title">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Plan Sanitario y Vacunas Básicas
+              </h2>
+              <span class="info-accordion-arrow">▼</span>
+            </div>
+            <div class="info-accordion-content">
+              <p>Un animal libre de parásitos y vacunado es un animal fuerte y feliz. El calendario inicial aproximado
+                consiste en:</p>
+              <p><strong>Para Cachorros Perros:</strong></p>
+              <ul>
+                <li>Desparasitación: Desde los 15 días de vida, repitiendo según indicación veterinaria.</li>
+                <li>Vacuna Sextuple (a los 45 días): Contra Parvovirus, Moquillo, Hepatitis y otros. Requiere refuerzos
+                  cada 21 días (usualmente 3 dosis).</li>
+                <li>Antirrábica: Obligatoria por ley, se aplica a los 3 meses y se repite anualmente.</li>
+              </ul>
+              <p><strong>Para Gatitos:</strong></p>
+              <ul>
+                <li>Triple Felina: A los 2 meses, con un refuerzo a los 21 días.</li>
+                <li>Antirrábica: A partir de los 3 meses de edad.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Acordeón 3 -->
+          <div class="info-accordion" onclick="toggleAccordion(this)">
+            <div class="info-accordion-header">
+              <h2 class="info-accordion-title">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                ¿Cómo actuar ante una urgencia?
+              </h2>
+              <span class="info-accordion-arrow">▼</span>
+            </div>
+            <div class="info-accordion-content">
+              <p>Si encontrás a un animal herido en la calle o accidentado en Durazno:</p>
+              <ul>
+                <li><strong>Asegurá la zona:</strong> Acercate despacio. Un animal con dolor puede morder por miedo,
+                  incluso si es dócil. Usá una campera o manta para envolverlo suavemente si es necesario.</li>
+                <li><strong>Primeros Auxilios básicos:</strong> Si hay hemorragias externas, podés presionar la herida
+                  con un paño limpio. Mantené al animal en una posición cómoda sin mover bruscamente su columna en caso
+                  de atropellamiento.</li>
+                <li><strong>Contacto veterinario:</strong> Comunicate de inmediato con las clínicas veterinarias de
+                  Durazno o publicá la alerta en la pestaña <em>Alertas</em> para encontrar tránsito o apoyo.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Acordeón 4 -->
+          <div class="info-accordion" onclick="toggleAccordion(this)">
+            <div class="info-accordion-header">
+              <h2 class="info-accordion-title">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Adaptación en el Nuevo Hogar
+              </h2>
+              <span class="info-accordion-arrow">▼</span>
+            </div>
+            <div class="info-accordion-content">
+              <p>La llegada de un animal adoptado requiere paciencia. Pasarán por un período de adaptación de 3 días
+                (descompresión), 3 semanas (rutina) y 3 meses (sentirse plenamente seguros).</p>
+              <ul>
+                <li><strong>Espacio propio:</strong> Preparale un rincón tranquilo con su plato de agua, comida y una
+                  mantita.</li>
+                <li><strong>Presentación:</strong> Si tenés otras mascotas, presentalas de forma neutral (en la calle
+                  con correa para perros; en habitaciones separadas inicialmente para gatos).</li>
+                <li><strong>Paciencia:</strong> Es normal que los primeros días esté asustado, no quiera comer mucho o
+                  tenga algún accidente de higiene. No le grites, guialo con cariño y premios.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+       5. PESTAÑA NOSOTROS y AYUDA (#nosotros)
+       ───────────────────────────────────────────────────────────────── -->
+    <div id="nosotros" class="tab-content">
+      <div class="section-header-banner">
+        <div class="content-wrapper">
+          <div class="banner-subtitle">Sobre Nosotros</div>
+          <h1 class="banner-title">¿Quiénes <span>Somos</span>? 🐾</h1>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <div class="about-card">
+          <p class="about-text">Somos un grupo de voluntarios unidos en <strong>Durazno, Uruguay</strong>, dedicados al
+            rescate de animales en situación de calle, maltrato o urgencia médica.</p>
+          <p class="about-text">Nuestra misión es rehabilitarlos, darles tránsito seguro y buscarles hogares definitivos
+            mediante la adopción responsable. Esta herramienta fue hecha por <a href="https://conectatumundo.net"
+             target="_blank" style="color: purple; text-decoration: underline;">conectatumundo</a> para ayudarnos en nuestra misión.</p>
+        </div>
+
+        <!-- Donaciones -->
+        <h2 class="donation-section-title">💸 ¿Cómo colaborar con nosotros?</h2>
+
+        <div class="donation-cards-wrap">
+          <!-- Cuenta 1 -->
+          <div class="donation-card">
+            <div class="donation-card-header">
+              <span class="donation-bank-name">🏦 BROU (Pesos)</span>
+            </div>
+            <p style="font-size: 13px; color: var(--texto-soft); margin-bottom: 8px;">Caja de Ahorro a nombre de Refugio
+              Durazno</p>
+            <div class="donation-data-row">
+              <span class="data-text" id="brouAcc">Caja de Ahorro: 123456789</span>
+              <button class="copy-btn" onclick="copyText('123456789', 'Caja de Ahorro BROU')">Copiar</button>
+            </div>
+          </div>
+
+          <!-- Cuenta 2 -->
+          <div class="donation-card">
+            <div class="donation-card-header">
+              <span class="donation-bank-name">📱 Mercado Pago / Redpagos</span>
+            </div>
+            <p style="font-size: 13px; color: var(--texto-soft); margin-bottom: 8px;">Colectivo para urgencias
+              veterinarias</p>
+            <div class="donation-data-row">
+              <span class="data-text" id="mpAcc">Colectivo Redpagos N° 123456</span>
+              <button class="copy-btn" onclick="copyText('123456', 'Colectivo Redpagos')">Copiar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puntos de Recolección -->
+        <div class="recollection-box">
+          <strong>📦 Donaciones físicas en Durazno:</strong>
+          Podés donar ración, mantas, collares, bozales o medicamentos veterinarios en desuso llevándolos a:<br>
+          • <strong>Veterinaria Durazno:</strong> Calle Rivera 458 (Lunes a Sábado de 9 a 19hs)<br>
+          • <strong>Hogar de Tránsito Central:</strong> Barrio La Amarilla (coordinar por WhatsApp)
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────────────
+       BOTTOM NAVIGATION BAR (Fijo abajo en móviles, arriba en desktop)
+       ───────────────────────────────────────────────────────────────── -->
+    <nav class="bottom-nav">
+      <div class="nav-wrapper">
+        <a href="#inicio" class="nav-item" id="nav-inicio">
+          <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
+          <span class="nav-label">Inicio</span>
+        </a>
+        <a href="#adopciones" class="nav-item" id="nav-adopciones">
+          <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+            </svg>
+          </div>
+          <span class="nav-label">Adopciones</span>
+        </a>
+        <a href="#alertas" class="nav-item" id="nav-alertas">
+          <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
+            </svg>
+          </div>
+          <span class="nav-label">Alertas</span>
+        </a>
+        <a href="#informacion" class="nav-item" id="nav-informacion">
+          <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12" y2="8" />
+            </svg>
+          </div>
+          <span class="nav-label">Info</span>
+        </a>
+        <a href="#nosotros" class="nav-item" id="nav-nosotros">
+          <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+            </svg>
+          </div>
+          <span class="nav-label">Nosotros</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- ─── TOAST NOTIFICATION ─── -->
+    <div id="toast">¡Texto copiado! 📋</div>
+
+    <!-- ─── MODAL DETALLE DE MASCOTA (GLASSMORPHISM CENTRADO Y BLUR) ─── -->
+    <div class="modal-bg" id="modalBg" onclick="handleModalBgClick(event)">
+      <div class="modal" id="modal">
+        <div class="modal-img-wrap">
+          <img id="modalImg" src="" alt="" class="modal-img"
+            onerror="handleImageError(this, 'https://placehold.co/480x270/EFF6FF/1E3A8A?text=🐾')">
+          <button class="modal-close" onclick="closeModalDirect()">✕</button>
+        </div>
+        <div class="modal-body">
+          <span id="modalEstado" class="modal-estado-tag disponible">Disponible</span>
+          <h2 id="modalName" class="modal-name">Sin nombre</h2>
+          <div id="modalBreed" class="modal-breed">Gato</div>
+          <div class="modal-tags" id="modalTags">
+            <!-- Tags dinámicos -->
+          </div>
+          <h3 class="modal-desc-title">Conocé su historia</h3>
+          <p id="modalDesc" class="modal-desc">Cargando descripción...</p>
+          <button class="modal-btn-adopt" id="modalAdoptBtn">
+            🐾 Quiero adoptarlo — ¡Es gratis!
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─────────────────────────────────────────────────────────────────
+     JAVASCRIPT & LÓGICA DE NEGOCIO (SPA & GOOGLE SHEETS)
+     ───────────────────────────────────────────────────────────────── -->
+  <script>
+    // ─── CONFIGURACIÓN GLOBAL ───
+    const SHEET_ID = '2PACX-1vTIF_ruPvtTTRTgYdFGQ3z65JNGM-2TvNCdGAexzlExqP2H-mgg0xPDoFDQT81jwLKi8NFTJEoXJpn-';
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?gid=0&single=true&output=csv`;
+    const GENERAL_WHATSAPP = '59891234567'; // Fallback de contacto general
+
+    // ─── MASCOTAS DE RESPALDO (OFFLINE / FALLBACK DE SEGURIDAD) ───
+    const MOCK_PETS = [
+      {
+        id: 1001,
+        nombre: "Rika",
+        sexo: "Hembra",
+        edad: "Cachorro (3 meses)",
+        imagen: "https://drive.google.com/thumbnail?id=11gom1d3wJQR3Hn5HFnnLWdW5xj9i18hH&sz=w600",
+        descripcion: "Es una hermosa gatita tricolor súper juguetona. Le encanta dormir acurrucada, ya sabe usar las piedritas sanitarias y está completamente desparasitada.",
+        estado: "disponible",
+        especie: "Gato",
+        contacto: "099123456"
+      },
+      {
+        id: 1002,
+        nombre: "Toji",
+        sexo: "Hembra",
+        edad: "Adulto (1 año)",
+        imagen: "https://drive.google.com/thumbnail?id=1E8LS3bH0l8jyl5bH4_WvnYsF3nSnsmdN&sz=w600",
+        descripcion: "Gata vaquita blanca y negra súper mimosa y tranquila. Se lleva fantástico con otros gatos y es ideal para vivir en un departamento pacífico.",
+        estado: "disponible",
+        especie: "Gato",
+        contacto: "098765432"
+      },
+      {
+        id: 1003,
+        nombre: "Cersei",
+        sexo: "Hembra",
+        edad: "Adulto (3 años)",
+        imagen: "https://drive.google.com/thumbnail?id=1rzpOvn93qjeJtH00CgsL3Z66FQz6GunA&sz=w600",
+        descripcion: "Perrita de tamaño mediano muy protectora y guardiana. Es fiel con su familia, le encanta salir a pasear e investigar. Ya fue adoptada por su familia ideal.",
+        estado: "adoptado",
+        especie: "Perro",
+        contacto: "099555444"
+      },
+      {
+        id: 1004,
+        nombre: "Harry",
+        sexo: "Macho",
+        edad: "Cachorrón (8 meses)",
+        imagen: "https://drive.google.com/thumbnail?id=1IKRrBFYwtJaq04fk26H-W6hJZuqIzjtx&sz=w600",
+        descripcion: "Hermoso gatito rubio muy enérgico y curioso. Le encantan los juguetes que hacen ruido y siempre busca mimos y atención de sus dueños.",
+        estado: "disponible",
+        especie: "Gato",
+        contacto: "097154271"
+      }
+    ];
+
+    // ─── ESTADOS GLOBALES DE LA APP ───
+    let allPets = [];
+    let filteredPets = [];
+    let currentFilter = 'Todos';
+    let likedSet = new Set(JSON.parse(localStorage.getItem('likedPets')) || []);
+    let activePet = null;
+
+    // ─── ENRUTADOR SPA (HASH ROUTER) ───
+    function router() {
+      const hash = window.location.hash || '#inicio';
+      const validHashes = ['#inicio', '#adopciones', '#alertas', '#informacion', '#nosotros'];
+      const targetHash = validHashes.includes(hash) ? hash : '#inicio';
+
+      // Desactivar todas las secciones y navs
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+      // Activar la seleccionada
+      const targetElement = document.querySelector(targetHash);
+      if (targetElement) targetElement.classList.add('active');
+
+      const navId = 'nav-' + targetHash.substring(1);
+      const targetNav = document.getElementById(navId);
+      if (targetNav) targetNav.classList.add('active');
+
+      // Scrollear hacia arriba en la transición
+      window.scrollTo(0, 0);
+
+      // Cerrar modal si estuviera abierto al navegar
+      closeModalDirect();
+    }
+
+    function navigateToTab(tabName) {
+      window.location.hash = '#' + tabName;
+    }
+
+    // ─── PARSEADOR INTELIGENTE DE CSV (GOOGLE SHEETS FORMAT) ───
+    function smartSplit(line) {
+      const result = [];
+      let cur = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+        if (c === '"') {
+          inQuotes = !inQuotes;
+        } else if (c === ',' && !inQuotes) {
+          result.push(cur);
+          cur = '';
+        } else {
+          cur += c;
+        }
+      }
+      result.push(cur);
+      return result;
+    }
+
+    function parseCSV(text) {
+      const lines = text.trim().split(/\r?\n/);
+      if (lines.length < 2) return [];
+      const rawHeaders = smartSplit(lines[0]);
+      const headers = rawHeaders.map(h => h.replace(/^"|"$/g, '').trim().toLowerCase());
+
+      const result = [];
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const row = smartSplit(lines[i]);
+        const obj = {};
+        headers.forEach((h, idx) => {
+          obj[h] = (row[idx] || '').replace(/^"|"$/g, '').trim();
+        });
+
+        // Evitar añadir filas enteras vacías
+        const nombreVal = obj['nombre'] || obj[''] || '';
+        if (!nombreVal || nombreVal.trim() === '') continue;
+
+        obj.nombre = nombreVal;
+        result.push(obj);
+      }
+      return result;
+    }
+
+    function detectSpecies(rowObj) {
+      const haystack = JSON.stringify(rowObj).toLowerCase();
+      if (/\b(perro|dog|canin|cachorr|cachorra)\b/.test(haystack)) return 'Perro';
+      if (/\b(gato|cat|felin|kitten|gatit)\b/.test(haystack)) return 'Gato';
+      return 'Otro';
+    }
+
+    function handleImageError(imgEl, fallbackSrc) {
+      imgEl.onerror = null; // Prevenir bucles infinitos
+      imgEl.src = fallbackSrc;
+    }
+
+    // ─── CARGA DE DATOS DE GOOGLE SHEETS ───
+    async function loadPetsData() {
+      const featuredCarousel = document.getElementById('featuredCarousel');
+      const petsList = document.getElementById('petsList');
+
+      // Activar banner de advertencia si cargamos vía file://
+      if (location.protocol === 'file:') {
+        document.getElementById('corsWarning').style.display = 'block';
+      }
+
+      try {
+        const response = await fetch(CSV_URL);
+        if (!response.ok) throw new Error('HTTP Error: ' + response.status);
+        const csvText = await response.text();
+        const parsedRows = parseCSV(csvText);
+
+        allPets = parsedRows.map((r, index) => {
+          const estadoRaw = (r['estado'] || '').toLowerCase().trim();
+          let estado = 'disponible';
+          // Si dice "adoptado" es ya adoptado. Si está vacío o es otra cosa, disponible.
+          if (/\badoptado\b/.test(estadoRaw) && !/\ben\s+adop/.test(estadoRaw)) {
+            estado = 'adoptado';
+          }
+
+          const sexoRaw = (r['sexo'] || '').trim();
+          let sexo = sexoRaw;
+          if (sexoRaw.toUpperCase() === 'TRUE') sexo = 'Macho';
+          if (sexoRaw.toUpperCase() === 'FALSE') sexo = 'Hembra';
+
+          const imgRaw = r['image_url_publica'] || r['image_url'] || r['imagen'] || r['foto_url'] || '';
+          // Validar si es URL válida
+          const imagen = imgRaw.startsWith('http') ? imgRaw : '';
+
+          return {
+            id: index,
+            nombre: r['nombre'] || 'Sin nombre',
+            sexo: sexo || 'Indefinido',
+            edad: r['edad'] || 'No especificada',
+            imagen,
+            descripcion: r['descripcion'] || r['descripción'] || 'Mascota rescatada esperando hogar en Durazno.',
+            estado,
+            especie: detectSpecies(r),
+            contacto: (r['contacto'] || '').replace(/[^0-9]/g, '') // Guardamos solo los números
+          };
+        });
+      } catch (error) {
+        console.warn("Fallo cargando Google Sheets, usando base de respaldo local:", error);
+        allPets = MOCK_PETS.map((p) => ({ ...p }));
+      }
+
+      // Actualizar estadísticas básicas
+      document.getElementById('statDisponibles').textContent = allPets.filter(p => p.estado === 'disponible').length;
+
+      applyFilters();
+    }
+
+    // ─── APLICAR FILTROS Y BÚSQUEDA ───
+    function applyFilters() {
+      const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+      const sexFilterVal = document.getElementById('sexFilter').value;
+      const statusFilterVal = document.getElementById('statusFilter').value;
+
+      filteredPets = allPets.filter(p => {
+        // 1. Filtro de especie
+        const matchSpecies = currentFilter === 'Todos' || p.especie === currentFilter;
+
+        // 2. Filtro de sexo
+        const matchSex = sexFilterVal === 'Todos' || p.sexo === sexFilterVal;
+
+        // 3. Filtro de estado (disponible / adoptado)
+        const matchStatus = statusFilterVal === 'Todos' || p.estado === statusFilterVal;
+
+        // 4. Búsqueda libre
+        const matchSearch = !searchQuery
+          || p.nombre.toLowerCase().includes(searchQuery)
+          || p.descripcion.toLowerCase().includes(searchQuery)
+          || p.especie.toLowerCase().includes(searchQuery)
+          || p.sexo.toLowerCase().includes(searchQuery);
+
+        return matchSpecies && matchSex && matchStatus && matchSearch;
+      });
+
+      renderFeaturedPets();
+      renderGeneralPetsList();
+    }
+
+    function setSpeciesFilter(val, buttonEl) {
+      currentFilter = val;
+      document.querySelectorAll('.filter-chip').forEach(c => {
+        c.className = 'filter-chip inactive';
+      });
+      buttonEl.className = 'filter-chip active';
+      applyFilters();
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('sexFilter').value = 'Todos';
+      document.getElementById('statusFilter').value = 'Todos';
+      setSpeciesFilter('Todos', document.querySelector('.filter-chip'));
+      applyFilters();
+    }
+
+    // ─── RENDERIZAR CASOS URGENTES ───
+    function renderFeaturedPets() {
+      const container = document.getElementById('featuredCarousel');
+      const featuredHeader = document.getElementById('featuredHeader');
+
+      const urgentes = filteredPets.filter(p => p.estado === 'disponible');
+
+      if (urgentes.length === 0) {
+        container.style.display = 'none';
+        featuredHeader.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'flex';
+      featuredHeader.style.display = 'block';
+
+      container.innerHTML = urgentes.slice(0, 4).map(p => {
+        const isLiked = likedSet.has(p.id);
+        const fallbackImage = 'https://placehold.co/380x250/EFF6FF/1E3A8A?text=🐾';
+        const imageSrc = p.imagen || fallbackImage;
+
+        return `
+      <div class="featured-card" onclick="openPetModal(${p.id})">
+        <img src="${imageSrc}" alt="${p.nombre}" onerror="handleImageError(this, '${fallbackImage}')">
+        <div class="ad-tag-top">ADOPCIÓN GRATIS</div>
+        <button class="favorite-badge-circle ${isLiked ? 'liked' : ''}" 
+                onclick="event.stopPropagation(); toggleLike(${p.id}, this)">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </button>
+        <div class="featured-overlay">
+          <div class="featured-name">${p.nombre}</div>
+          <div class="featured-details">${p.especie} · ${p.edad} años</div>
+          <div class="featured-meta">
+            <svg width="12" height="12" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 13a3 3 0 110-6 3 3 0 010 6z"/>
+            </svg>
+            <span>Sexo: ${p.sexo}</span>
+          </div>
+        </div>
+      </div>
+    `;
+      }).join('');
+    }
+
+    // ─── RENDERIZAR LISTA GENERAL DE MASCOTAS ───
+    function renderGeneralPetsList() {
+      const container = document.getElementById('petsList');
+      const countBadge = document.getElementById('petsCount');
+
+      countBadge.textContent = filteredPets.length;
+
+      if (filteredPets.length === 0) {
+        container.innerHTML = `
+      <div class="empty-state">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/><path d="M8 12h8m-4-4v8"/>
+        </svg>
+        <p>No encontramos mascotas disponibles con los filtros aplicados. Intentá limpiando la búsqueda.</p>
+      </div>
+    `;
+        return;
+      }
+
+      container.innerHTML = filteredPets.map(p => {
+        const isLiked = likedSet.has(p.id);
+        const fallbackImage = 'https://placehold.co/120x120/EFF6FF/1E3A8A?text=🐾';
+        const imageSrc = p.imagen || fallbackImage;
+        const statusClass = p.estado === 'disponible' ? 'disponible' : 'adoptado';
+        const statusLabel = p.estado === 'disponible' ? '✓ Disponible para Adopción' : '✓ Ya Adoptado 🎉';
+
+        return `
+      <div class="pet-card" onclick="openPetModal(${p.id})">
+        <img class="pet-card-img" src="${imageSrc}" alt="${p.nombre}" onerror="handleImageError(this, '${fallbackImage}')">
+        <div class="pet-card-info">
+          <div class="pet-card-name">${p.nombre}</div>
+          <div class="pet-card-breed">${p.especie} · ${p.edad} años </div>
+          <div class="pet-card-meta">
+            <span class="meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+              ${p.sexo}
+            </span>
+          </div>
+          <div class="pet-card-status ${statusClass}">${statusLabel}</div>
+        </div>
+        <button class="pet-card-heart ${isLiked ? 'liked' : ''}" 
+                onclick="event.stopPropagation(); toggleLike(${p.id}, this)">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </button>
+      </div>
+    `;
+      }).join('');
+    }
+
+    // ─── AGREGAR/ELIMINAR DE FAVORITOS ───
+    function toggleLike(id, btnEl) {
+      if (likedSet.has(id)) {
+        likedSet.delete(id);
+        btnEl.classList.remove('liked');
+        if (btnEl.querySelector('svg path')) {
+          btnEl.querySelector('svg path').setAttribute('fill', 'none');
+        }
+        showToast('Quitado de favoritos 💔');
+      } else {
+        likedSet.add(id);
+        btnEl.classList.add('liked');
+        showToast('¡Guardado en tus favoritos! ❤️');
+      }
+
+      localStorage.setItem('likedPets', JSON.stringify(Array.from(likedSet)));
+      applyFilters();
+    }
+
+    // ─── MODAL DETALLE DE MASCOTA ───
+    function openPetModal(id) {
+      const p = allPets.find(item => item.id === id);
+      if (!p) return;
+      activePet = p;
+
+      const fallbackImage = 'https://placehold.co/480x270/EFF6FF/1E3A8A?text=🐾';
+      document.getElementById('modalImg').src = p.imagen || fallbackImage;
+      document.getElementById('modalName').textContent = p.nombre;
+      document.getElementById('modalBreed').textContent = `${p.especie} · ${p.edad}`;
+      document.getElementById('modalDesc').textContent = p.descripcion;
+
+      const estadoEl = document.getElementById('modalEstado');
+      if (p.estado === 'adoptado') {
+        estadoEl.textContent = 'Adoptado';
+        estadoEl.className = 'modal-estado-tag adoptado';
+      } else {
+        estadoEl.textContent = 'Disponible';
+        estadoEl.className = 'modal-estado-tag disponible';
+      }
+
+      const tagsHtml = [];
+      if (p.sexo) tagsHtml.push(`<span class="modal-tag">${p.sexo}</span>`);
+      if (p.edad) tagsHtml.push(`<span class="modal-tag">${p.edad}</span>`);
+      if (p.especie) tagsHtml.push(`<span class="modal-tag">${p.especie}</span>`);
+      if (p.estado !== 'adoptado') tagsHtml.push(`<span class="modal-tag" style="color:var(--green); background:var(--green-light)">Adopción Gratis</span>`);
+      document.getElementById('modalTags').innerHTML = tagsHtml.join('');
+
+      const btn = document.getElementById('modalAdoptBtn');
+      if (p.estado === 'adoptado') {
+        btn.textContent = '✓ Este amigo ya está adoptado';
+        btn.style.background = '#94A3B8';
+        btn.style.cursor = 'default';
+        btn.onclick = null;
+      } else {
+        btn.textContent = '🐾 Quiero adoptarlo — ¡Contactar por WhatsApp!';
+        btn.style.background = '';
+        btn.style.cursor = 'pointer';
+        btn.onclick = contactOwner;
+      }
+
+      document.getElementById('modalBg').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModalDirect() {
+      document.getElementById('modalBg').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleModalBgClick(e) {
+      if (e.target.id === 'modalBg') {
+        closeModalDirect();
+      }
+    }
+
+    // ─── CONTACTO A TRAVÉS DE WHATSAPP CON NÚMERO INDIVIDUAL ───
+    function contactOwner() {
+      if (!activePet) return;
+
+      let targetPhone = activePet.contacto || GENERAL_WHATSAPP;
+      targetPhone = targetPhone.replace(/[^0-9]/g, '');
+
+      if (targetPhone.startsWith('0')) {
+        targetPhone = '598' + targetPhone.substring(1);
+      } else if (targetPhone.length === 8 && (targetPhone.startsWith('9') || targetPhone.startsWith('8') || targetPhone.startsWith('7'))) {
+        targetPhone = '598' + targetPhone;
+      }
+
+      const textMsg = `Hola! Revisando la web encontré a ${activePet.nombre}. Me gustaría consultar sobre la adopción. ¡Muchas gracias!`;
+      const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(textMsg)}`;
+
+      window.open(waUrl, '_blank');
+    }
+
+    // ─── ALERTS SYSTEM (REPORTES PERDIDOS Y ENCONTRADOS) ───
+    const DEFAULT_ALERTS = [
+      {
+        id: 2001,
+        nombre: "Negrito",
+        especie: "Perro",
+        estado: "perdido",
+        zona: "Barrio Sanducito, Durazno",
+        contacto: "099888777",
+        fecha: "Hoy",
+        descripcion: "Perro negro de tamaño mediano con collar rojo. Es miedoso pero muy dócil. Si lo ven, por favor llamar."
+      },
+      {
+        id: 2002,
+        nombre: "Gata Siamés",
+        especie: "Gato",
+        estado: "encontrado",
+        zona: "Inmediaciones del Bioparque, Durazno",
+        contacto: "098111222",
+        fecha: "Ayer",
+        descripcion: "Gata tipo siamesa encontrada resguardándose de la lluvia. Tiene collar de cascabel pero no chapa identificatoria. Se busca dueño."
+      }
+    ];
+
+    function toggleReportForm() {
+      const container = document.getElementById('reportFormContainer');
+      container.classList.toggle('open');
+      if (container.classList.contains('open')) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function loadAlerts() {
+      const container = document.getElementById('alertsList');
+      const userAlerts = JSON.parse(localStorage.getItem('userAlerts')) || [];
+      const allAlerts = [...userAlerts, ...DEFAULT_ALERTS];
+
+      if (allAlerts.length === 0) {
+        container.innerHTML = `
+      <div class="empty-state">
+        <p>No hay alertas activas en este momento 🐾</p>
+      </div>
+    `;
+        return;
+      }
+
+      container.innerHTML = allAlerts.map(a => {
+        const isLost = a.estado === 'perdido';
+        const statusLabel = isLost ? 'Perdido 🔴' : 'Encontrado 🟢';
+        const statusClass = isLost ? 'perdido' : 'encontrado';
+        const defaultImg = 'https://placehold.co/120x120/EFF6FF/1E3A8A?text=Alert';
+
+        return `
+      <div class="alert-item-card">
+        <div class="alert-header-row">
+          <span class="alert-status-pill ${statusClass}">${statusLabel}</span>
+          <span class="alert-date">${a.fecha || 'Reciente'}</span>
+        </div>
+        <div class="alert-body-row">
+          <img class="alert-img" src="${defaultImg}" alt="Alerta animal">
+          <div class="alert-details">
+            <h3 class="alert-name">${a.nombre}</h3>
+            <div class="alert-info-row">
+              📍 <span>Zona: ${a.zona}</span>
+            </div>
+            <p class="alert-desc">${a.descripcion}</p>
+            <a class="alert-contact-btn" href="tel:${a.contacto}">
+              📞 Llamar al ${a.contacto}
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+      }).join('');
+    }
+
+    function handleAlertFormSubmit(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('alertName').value.trim();
+      const status = document.getElementById('alertStatus').value;
+      const zone = document.getElementById('alertZone').value.trim();
+      const contact = document.getElementById('alertContact').value.trim();
+      const specie = document.getElementById('alertSpecie').value;
+      const desc = document.getElementById('alertDesc').value.trim();
+
+      const newAlert = {
+        id: Date.now(),
+        nombre: name,
+        especie: specie,
+        estado: status,
+        zona: zone,
+        contacto: contact,
+        fecha: "Hoy",
+        descripcion: desc
       };
+
+      const userAlerts = JSON.parse(localStorage.getItem('userAlerts')) || [];
+      userAlerts.unshift(newAlert);
+      localStorage.setItem('userAlerts', JSON.stringify(userAlerts));
+
+      document.getElementById('alertForm').reset();
+      toggleReportForm();
+      loadAlerts();
+      showToast('¡Alerta de mascota publicada con éxito! 🚨');
+    }
+
+    // ─── SECCIÓN INFORMACIÓN / ACORDEONES ───
+    function toggleAccordion(el) {
+      const isOpen = el.classList.contains('open');
+
+      document.querySelectorAll('.info-accordion').forEach(item => {
+        item.classList.remove('open');
+      });
+
+      if (!isOpen) {
+        el.classList.add('open');
+      }
+    }
+
+    // ─── UTILIDAD: COPIAR AL PORTAPAPELES CON TOAST ───
+    function copyText(text, label) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`¡${label} copiado! 📋`);
+      }).catch(err => {
+        console.error('Error al copiar: ', err);
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    // ─── INICIALIZACIÓN GLOBAL DE LA APLICACIÓN ───
+    window.addEventListener('hashchange', router);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      router();
+      loadPetsData();
+      loadAlerts();
     });
-
-    applyFilters();
-  } catch (e) {
-    document.getElementById('featuredScroll').innerHTML =
-      `<div class="state-msg">
-        No se pudo cargar la planilla.<br>
-        ${location.protocol === 'file:'
-          ? '⚠️ Necesitás usar <strong>Live Server</strong> en VS Code.'
-          : 'Verificá que la hoja sea pública y que el ID sea correcto.'}
-      </div>`;
-    document.getElementById('nearbyList').innerHTML = '';
-    console.error('Error cargando planilla:', e);
-  }
-}
-
-// ─── Filtros ──────────────────────────────────────────────────────
-function applyFilters() {
-  const q = document.getElementById('searchInput').value.toLowerCase().trim();
-  filtered = allPets.filter(p => {
-    const matchEspecie = currentFilter === 'Todos' || p.especie === currentFilter;
-    const matchSearch  = !q
-      || p.nombre.toLowerCase().includes(q)
-      || p.descripcion.toLowerCase().includes(q)
-      || p.especie.toLowerCase().includes(q)
-      || p.sexo.toLowerCase().includes(q);
-    return matchEspecie && matchSearch;
-  });
-  renderFeatured();
-  renderNearby();
-}
-
-function setFilter(val, btn) {
-  currentFilter = val;
-  document.querySelectorAll('.chip').forEach(c => c.className = 'chip inactive');
-  btn.className = 'chip active';
-  applyFilters();
-}
-
-function clearSearch() {
-  document.getElementById('searchInput').value = '';
-  applyFilters();
-}
-
-function showAll() {
-  setFilter('Todos', document.querySelector('.chip'));
-}
-
-// ─── Render featured ─────────────────────────────────────────────
-function renderFeatured() {
-  const el = document.getElementById('featuredScroll');
-  const disponibles = filtered.filter(p => p.estado === 'disponible');
-  if (!disponibles.length) {
-    el.innerHTML = '<div class="state-msg">Sin mascotas disponibles con esos filtros 🐾</div>';
-    return;
-  }
-  el.innerHTML = disponibles.slice(0, 2).map(p => `
-    <div class="featured-card" onclick="openModal(${p.id})">
-      <img src="${imgSrc(p)}" alt="${p.nombre}"
-           onerror="this.src='https://placehold.co/300x200/FDF6F0/F4646A?text=🐾'">
-      <div class="featured-overlay">
-        <div class="featured-name">${p.nombre}</div>
-        <div class="featured-breed">${p.especie}${p.edad ? ' · ' + p.edad : ''}</div>
-        <div class="featured-meta">
-          <svg width="12" height="12" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
-          <span>${p.sexo || 'Disponible'}</span>
-        </div>
-      </div>
-      <div class="featured-badge"
-           onclick="event.stopPropagation(); toggleLikeById(${p.id})"
-           id="heart-feat-${p.id}">
-        <svg width="16" height="16" viewBox="0 0 24 24">
-          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
-            fill="${likedSet.has(p.id) ? '#F4646A' : 'none'}"
-            stroke="#F4646A" stroke-width="2"/>
-        </svg>
-      </div>
-      <div class="adoption-tag">Adopción gratis</div>
-    </div>
-  `).join('');
-}
-
-// ─── Render nearby ────────────────────────────────────────────────
-function renderNearby() {
-  const el = document.getElementById('nearbyList');
-  const rest = filtered.slice(2);
-  document.getElementById('nearbyTitle').textContent =
-    currentFilter === 'Todos' ? 'Todos disponibles' : currentFilter + 's disponibles';
-
-  if (!rest.length) { el.innerHTML = ''; return; }
-
-  el.innerHTML = rest.map(p => `
-    <div class="nearby-card" onclick="openModal(${p.id})">
-      <img class="nearby-img" src="${imgSrc(p)}" alt="${p.nombre}"
-           onerror="this.src='https://placehold.co/70x70/FDF6F0/F4646A?text=🐾'">
-      <div class="nearby-info">
-        <div class="nearby-name">${p.nombre}</div>
-        <div class="nearby-breed">${p.especie}${p.edad ? ' · ' + p.edad : ''}</div>
-        <div class="nearby-meta">
-          <svg width="12" height="12" fill="none" stroke="#8A6F6F" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
-          </svg>
-          <span>${p.sexo || 'Disponible'}</span>
-        </div>
-        <div class="nearby-free">${p.estado === 'adoptado' ? '✓ Ya adoptado' : '🎉 Adopción gratuita'}</div>
-      </div>
-      <div class="nearby-heart ${likedSet.has(p.id) ? 'liked' : ''}"
-           onclick="event.stopPropagation(); toggleLikeById(${p.id})"
-           id="heart-near-${p.id}">
-        <svg width="20" height="20" viewBox="0 0 24 24">
-          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
-            stroke-width="2"/>
-        </svg>
-      </div>
-    </div>
-  `).join('');
-}
-
-// ─── Like ─────────────────────────────────────────────────────────
-function toggleLikeById(id) {
-  if (likedSet.has(id)) likedSet.delete(id); else likedSet.add(id);
-  applyFilters(); // re-render para actualizar corazones
-}
-
-// ─── Modal ────────────────────────────────────────────────────────
-function openModal(id) {
-  const p = allPets.find(a => a.id === id);
-  if (!p) return;
-  currentPet = p;
-
-  document.getElementById('modalImg').src = imgSrc(p);
-  document.getElementById('modalName').textContent = p.nombre;
-  document.getElementById('modalBreed').textContent = p.especie;
-
-  const estadoEl = document.getElementById('modalEstado');
-  estadoEl.textContent = p.estado === 'adoptado' ? '✓ Ya adoptado' : '✓ Disponible';
-  estadoEl.className   = 'badge-estado ' + (p.estado === 'adoptado' ? 'badge-adoptado' : 'badge-disponible');
-
-  const tags = [];
-  if (p.edad) tags.push(p.edad);
-  if (p.sexo) tags.push(p.sexo);
-  if (p.estado !== 'adoptado') tags.push('Adopción gratuita 🎉');
-  document.getElementById('modalTags').innerHTML =
-    tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
-
-  document.getElementById('modalDesc').textContent =
-    p.descripcion || 'Este adorable amigo está esperando su hogar para siempre. ¡Anímate a adoptarlo!';
-
-  const btn = document.getElementById('modalBtn');
-  if (p.estado === 'adoptado') {
-    btn.textContent        = '✓ Este amiguito ya fue adoptado';
-    btn.style.background   = '#ccc';
-    btn.style.cursor       = 'default';
-    btn.onclick            = null;
-  } else {
-    btn.textContent        = '🐾 Quiero adoptarlo — ¡Es gratis!';
-    btn.style.background   = 'var(--rose)';
-    btn.style.cursor       = 'pointer';
-    btn.onclick            = contactAdopt;
-  }
-
-  document.getElementById('modalBg').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal(e) {
-  if (e.target.id === 'modalBg') closeModalDirect();
-}
-function closeModalDirect() {
-  document.getElementById('modalBg').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function contactAdopt() {
-  if (!currentPet) return;
-  alert(`¡Genial! Querés adoptar a ${currentPet.nombre} 🐾\n\n${CONTACTO}\n\n¡La adopción es completamente gratuita!`);
-}
-
-function showFavorites() {
-  if (likedSet.size === 0) {
-    alert('Todavía no marcaste favoritos.\nTocá el ❤️ en las tarjetas para guardar mascotas.');
-    return;
-  }
-  const favs = allPets.filter(p => likedSet.has(p.id));
-  alert('Tus favoritos:\n' + favs.map(p => `• ${p.nombre} (${p.especie})`).join('\n'));
-}
-
-// ─── Init ─────────────────────────────────────────────────────────
-loadPets();
-</script>
+  </script>
 </body>
+
 </html>

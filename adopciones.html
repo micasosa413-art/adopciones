@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=index.html">
+  <title>Redireccionando... 🐾</title>
+  <script>
+    // Redirigir vía JS de forma inmediata conservando el hash de navegación vieja si existe
+    const targetHash = window.location.hash || '';
+    window.location.replace("index.html" + targetHash);
+  </script>
+</head>
+<body>
+  <p>Redireccionando a la nueva plataforma de adopciones... Si no sos redirigido de forma automática, <a href="index.html">hacé clic acá</a>.</p>
+</body>
+</html>
