@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuentra a tu amigo 🐾</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --rose:#F4646A;
+    --rose-light:#FFF0F0;
+    --rose-mid:#FDDCDC;
+    --cream:#FDF6F0;
+    --text:#2C1A1A;
+    --text-soft:#8A6F6F;
+    --white:#FFFFFF;
+    --card-radius:20px;
+    --chip-radius:50px;
+  }
+  body{
+    font-family:'Nunito',sans-serif;
+    background:var(--cream);
+    color:var(--text);
+    min-height:100vh;
+  }
+  .app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:90px}
+
+  /* HEADER */
+  .header{padding:28px 20px 12px;background:var(--cream)}
+  .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+  .greeting{font-size:13px;color:var(--text-soft);font-weight:600;letter-spacing:.3px}
+  .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#f5a623,#f0824e);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;flex-shrink:0}
+  .title{font-size:26px;font-weight:800;color:var(--text);line-height:1.2}
+
+  /* SEARCH */
+  .search-wrap{padding:12px 20px;display:flex;gap:10px;align-items:center}
+  .search-box{flex:1;display:flex;align-items:center;gap:10px;background:var(--white);border-radius:var(--chip-radius);padding:0 18px;height:48px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .search-box svg{flex-shrink:0;opacity:.4}
+  .search-box input{border:none;outline:none;font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);background:transparent;width:100%}
+  .search-box input::placeholder{color:#C0A8A8}
+  .filter-btn{width:48px;height:48px;border-radius:15px;background:var(--rose);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s}
+  .filter-btn:active{transform:scale(.95)}
+
+  /* CHIPS */
+  .chips{display:flex;gap:10px;padding:0 20px 4px;overflow-x:auto;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{padding:9px 20px;border-radius:var(--chip-radius);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+  .chip.active{background:var(--rose);color:var(--white)}
+  .chip.inactive{background:var(--white);color:var(--text-soft);box-shadow:0 2px 8px rgba(0,0,0,.07)}
+
+  /* SECTION */
+  .section-header{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 14px}
+  .section-title{font-size:18px;font-weight:800;color:var(--text)}
+  .ver-todo{font-size:14px;font-weight:700;color:var(--rose);cursor:pointer}
+
+  /* FEATURED CARD */
+  .featured-scroll{display:flex;gap:16px;padding:0 20px 8px;overflow-x:auto;scrollbar-width:none}
+  .featured-scroll::-webkit-scrollbar{display:none}
+  .featured-card{position:relative;min-width:280px;height:200px;border-radius:var(--card-radius);overflow:hidden;flex-shrink:0;cursor:pointer}
+  .featured-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+  .featured-card:hover img{transform:scale(1.04)}
+  .featured-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,transparent 100%);padding:18px 16px 14px}
+  .featured-name{font-size:20px;font-weight:800;color:#fff;line-height:1}
+  .featured-breed{font-size:13px;color:rgba(255,255,255,.82);margin-top:2px}
+  .featured-meta{display:flex;align-items:center;gap:6px;margin-top:6px}
+  .featured-meta svg{opacity:.75}
+  .featured-meta span{font-size:12px;color:rgba(255,255,255,.8);font-weight:600}
+  .featured-badge{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.95);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .adoption-tag{position:absolute;bottom:14px;right:14px;background:var(--rose);color:#fff;font-size:12px;font-weight:800;border-radius:var(--chip-radius);padding:7px 14px;letter-spacing:.3px}
+
+  /* NEARBY CARDS */
+  .nearby-list{display:flex;flex-direction:column;gap:14px;padding:0 20px}
+  .nearby-card{background:var(--white);border-radius:var(--card-radius);padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+  .nearby-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+  .nearby-img{width:70px;height:70px;border-radius:15px;object-fit:cover;flex-shrink:0;background:#eee}
+  .nearby-info{flex:1;min-width:0}
+  .nearby-name{font-size:16px;font-weight:800;color:var(--text)}
+  .nearby-breed{font-size:13px;color:var(--text-soft);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nearby-meta{display:flex;align-items:center;gap:4px;margin-top:6px}
+  .nearby-meta svg{opacity:.5;flex-shrink:0}
+  .nearby-meta span{font-size:12px;color:var(--text-soft);font-weight:600}
+  .nearby-free{font-size:12px;font-weight:800;color:var(--rose);margin-top:2px}
+  .nearby-heart{flex-shrink:0;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;align-self:flex-start}
+  .nearby-heart svg{fill:none;stroke:#ddd;stroke-width:2;transition:all .2s}
+  .nearby-heart.liked svg{fill:var(--rose);stroke:var(--rose)}
+
+  /* BOTTOM NAV */
+  .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--white);border-top:1.5px solid rgba(0,0,0,.06);display:flex;align-items:center;justify-content:space-around;padding:10px 0 18px;z-index:100}
+  .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:0 16px}
+  .nav-label{font-size:11px;font-weight:700;color:#C0A8A8}
+  .nav-item.active .nav-label{color:var(--rose)}
+  .nav-active-dot{width:28px;height:28px;border-radius:50%;background:var(--rose);display:flex;align-items:center;justify-content:center}
+  .nav-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+
+  /* LOADING / EMPTY / ERROR */
+  .state-msg{text-align:center;padding:40px 20px;color:var(--text-soft);font-size:15px;font-weight:600;line-height:1.6}
+  .state-msg a{color:var(--rose);text-decoration:none;font-weight:700}
+  .loader{display:flex;justify-content:center;padding:30px}
+  .spinner{width:36px;height:36px;border:3px solid var(--rose-mid);border-top-color:var(--rose);border-radius:50%;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* MODAL */
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+  .modal-bg.open{opacity:1;pointer-events:all}
+  .modal{background:var(--white);border-radius:28px 28px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;transform:translateY(40px);transition:transform .3s}
+  .modal-bg.open .modal{transform:translateY(0)}
+  .modal-img{width:100%;height:260px;object-fit:cover;border-radius:20px 20px 0 0;display:block}
+  .modal-body{padding:22px 22px 0}
+  .modal-wrap{position:relative}
+  .modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.95);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);z-index:10}
+  .modal-name{font-size:26px;font-weight:800;color:var(--text)}
+  .modal-breed{font-size:15px;color:var(--text-soft);margin-top:2px;font-weight:600}
+  .modal-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .modal-tag{background:var(--rose-light);color:var(--rose);padding:6px 14px;border-radius:var(--chip-radius);font-size:13px;font-weight:700}
+  .modal-desc{margin-top:16px;font-size:15px;line-height:1.7;color:var(--text-soft);font-weight:600;padding-bottom:4px}
+  .modal-adopt-btn{display:block;margin:22px auto 0;width:calc(100% - 44px);background:var(--rose);color:#fff;border:none;border-radius:var(--chip-radius);padding:16px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:transform .15s,opacity .15s;letter-spacing:.3px;margin-bottom:32px}
+  .modal-adopt-btn:hover{opacity:.9}
+  .modal-adopt-btn:active{transform:scale(.98)}
+  .badge-estado{display:inline-block;padding:4px 12px;border-radius:var(--chip-radius);font-size:12px;font-weight:700;margin-bottom:8px}
+  .badge-disponible{background:#e8f9ef;color:#2d9451}
+  .badge-adoptado{background:#f0f0f0;color:#999}
+
+  /* BANNER CORS WARNING */
+  .cors-banner{background:#fff8e1;border-left:4px solid #f5a623;padding:14px 18px;margin:0 20px 16px;border-radius:12px;font-size:13px;color:#7a5c00;font-weight:600;line-height:1.6}
+  .cors-banner strong{display:block;margin-bottom:4px;font-size:14px}
+
+  @media(max-width:380px){
+    .title{font-size:22px}
+    .featured-card{min-width:240px;height:180px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="greeting">¡Hola!</div>
+        <div class="title">Encuentra a tu<br>amigo 🐾</div>
+      </div>
+      <div class="avatar">🐾</div>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg width="18" height="18" fill="none" stroke="#2C1A1A" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar mascotas..." oninput="applyFilters()">
+    </div>
+    <button class="filter-btn" onclick="clearSearch()" title="Limpiar búsqueda">
+      <svg width="18" height="18" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+    </button>
+  </div>
+
+  <div class="chips" id="chips">
+    <button class="chip active" onclick="setFilter('Todos',this)">Todos</button>
+    <button class="chip inactive" onclick="setFilter('Perro',this)">🐶 Perros</button>
+    <button class="chip inactive" onclick="setFilter('Gato',this)">🐱 Gatos</button>
+    <button class="chip inactive" onclick="setFilter('Otro',this)">🐾 Otros</button>
+  </div>
+
+  <div id="corsWarning" style="display:none" class="cors-banner">
+    <strong>⚠️ Abriste el archivo directo (file://)</strong>
+    Para cargar datos desde Google Sheets necesitás un servidor local.<br>
+    En VS Code instalá <strong>Live Server</strong> → clic derecho en el archivo → <em>"Open with Live Server"</em>
+  </div>
+
+  <div id="featuredSection">
+    <div class="section-header">
+      <span class="section-title">Destacado</span>
+      <span class="ver-todo" onclick="showAll()">Ver todo</span>
+    </div>
+    <div class="featured-scroll" id="featuredScroll">
+      <div class="loader"><div class="spinner"></div></div>
+    </div>
+  </div>
+
+  <div id="nearbySection">
+    <div class="section-header">
+      <span class="section-title" id="nearbyTitle">Todos disponibles</span>
+    </div>
+    <div class="nearby-list" id="nearbyList"></div>
+  </div>
+
+</div>
+
+<!-- Modal detalle -->
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-wrap">
+      <img id="modalImg" src="" alt="" class="modal-img"
+           onerror="this.src='https://placehold.co/480x260/FDF6F0/F4646A?text=🐾'">
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <span id="modalEstado" class="badge-estado badge-disponible"></span>
+      <div id="modalName" class="modal-name"></div>
+      <div id="modalBreed" class="modal-breed"></div>
+      <div class="modal-tags" id="modalTags"></div>
+      <div id="modalDesc" class="modal-desc"></div>
+    </div>
+    <button class="modal-adopt-btn" id="modalBtn">🐾 Quiero adoptarlo — ¡Es gratis!</button>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="nav-item active">
+    <div class="nav-active-dot">
+      <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </div>
+    <span class="nav-label" style="color:var(--rose)">Inicio</span>
+  </div>
+  <div class="nav-item" onclick="showFavorites()">
+    <div class="nav-icon"><svg width="22" height="22" fill="none" stroke="#C0A8A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+    <span class="nav-label">Favoritos</span>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon"><svg width="22" height="22" fill="none" stroke="#C0A8A8" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+    <span class="nav-label">Mensajes</span>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon"><svg width="22" height="22" fill="none" stroke="#C0A8A8" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+    <span class="nav-label">Alertas</span>
+  </div>
+  <div class="nav-item">
+    <div class="nav-icon"><svg width="22" height="22" fill="none" stroke="#C0A8A8" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <span class="nav-label">Perfil</span>
+  </div>
+</div>
+
+<script>
+// ─── CONFIGURACIÓN ──────────────────────────────────────────────
+const SHEET_ID = '2PACX-1vTIF_ruPvtTTRTgYdFGQ3z65JNGM-2TvNCdGAexzlExqP2H-mgg0xPDoFDQT81jwLKi8NFTJEoXJpn-';
+const CSV_URL  = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?gid=0&single=true&output=csv`;
+
+// Información de contacto del refugio — editá esto:
+const CONTACTO = 'WhatsApp: +598 XXXXXXXX o escribinos al mail del refugio.';
+// ────────────────────────────────────────────────────────────────
+
+let allPets    = [];
+let filtered   = [];
+let currentFilter = 'Todos';
+let likedSet   = new Set();
+let currentPet = null;
+
+// Detectar si se abre como file:// (CORS issue)
+if (location.protocol === 'file:') {
+  document.getElementById('corsWarning').style.display = 'block';
+}
+
+// ─── CSV helpers ─────────────────────────────────────────────────
+function smartSplit(line) {
+  const result = []; let cur = ''; let inQ = false;
+  for (const c of line) {
+    if (c === '"') { inQ = !inQ; }
+    else if (c === ',' && !inQ) { result.push(cur); cur = ''; }
+    else { cur += c; }
+  }
+  result.push(cur);
+  return result;
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+  const raw = smartSplit(lines[0]);
+  // La columna A está vacía → ignorar índice 0
+  const headers = raw.map(h => h.replace(/^"|"$/g,'').trim().toLowerCase());
+  const result = [];
+  for (let i = 1; i < lines.length; i++) {
+    const row = smartSplit(lines[i]);
+    const obj = {};
+    headers.forEach((h, idx) => {
+      obj[h] = (row[idx] || '').replace(/^"|"$/g,'').trim();
+    });
+    // "nombre" es la col B (índice 1 en headers porque A está vacía)
+    const nombre = obj['nombre'] || obj[''] || '';
+    if (!nombre) continue;
+    obj.nombre = nombre;
+    result.push(obj);
+  }
+  return result;
+}
+
+function detectSpecies(r) {
+  const haystack = JSON.stringify(r).toLowerCase();
+  if (/\bperr|\bdog|\bcanin|\bcachorro/.test(haystack)) return 'Perro';
+  if (/\bgat|\bcat|\bfelin|\bkitten/.test(haystack)) return 'Gato';
+  return 'Otro';
+}
+
+function imgSrc(pet) {
+  return pet.imagen
+    || `https://placehold.co/300x200/FDDCDC/F4646A?text=🐾`;
+}
+
+// ─── Carga de datos ───────────────────────────────────────────────
+async function loadPets() {
+  try {
+    const res  = await fetch(CSV_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    const rows = parseCSV(text);
+
+    allPets = rows.map((r, i) => {
+      const estadoRaw = (r['estado'] || '').toLowerCase().trim();
+      // Cualquier mención de "adop" → disponible. "adoptado" sin "en" → ya adoptado.
+      let estado = 'disponible';
+      if (/\badoptado\b/.test(estadoRaw) && !/\ben\s+adop/.test(estadoRaw)) {
+        estado = 'adoptado';
+      }
+
+      // Sexo: TRUE → Macho, FALSE → Hembra, cualquier otro valor lo muestra tal cual
+      const sexoRaw = (r['sexo'] || '').trim();
+      let sexo = sexoRaw;
+      if (sexoRaw.toUpperCase() === 'TRUE')  sexo = 'Macho';
+      if (sexoRaw.toUpperCase() === 'FALSE') sexo = 'Hembra';
+
+      // Imagen: primero image_url_publica, luego image_url, si es ruta local la ignoramos
+      const imgRaw = r['image_url_publica'] || r['image_url'] || r['imagen'] || r['foto_url'] || '';
+      const imagen = imgRaw.startsWith('http') ? imgRaw : '';
+
+      return {
+        id:          i,
+        nombre:      r['nombre']      || 'Sin nombre',
+        sexo,
+        edad:        r['edad']        || '',
+        imagen,
+        descripcion: r['descripcion'] || r['descripción'] || '',
+        estado,
+        especie:     detectSpecies(r),
+      };
+    });
+
+    applyFilters();
+  } catch (e) {
+    document.getElementById('featuredScroll').innerHTML =
+      `<div class="state-msg">
+        No se pudo cargar la planilla.<br>
+        ${location.protocol === 'file:'
+          ? '⚠️ Necesitás usar <strong>Live Server</strong> en VS Code.'
+          : 'Verificá que la hoja sea pública y que el ID sea correcto.'}
+      </div>`;
+    document.getElementById('nearbyList').innerHTML = '';
+    console.error('Error cargando planilla:', e);
+  }
+}
+
+// ─── Filtros ──────────────────────────────────────────────────────
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  filtered = allPets.filter(p => {
+    const matchEspecie = currentFilter === 'Todos' || p.especie === currentFilter;
+    const matchSearch  = !q
+      || p.nombre.toLowerCase().includes(q)
+      || p.descripcion.toLowerCase().includes(q)
+      || p.especie.toLowerCase().includes(q)
+      || p.sexo.toLowerCase().includes(q);
+    return matchEspecie && matchSearch;
+  });
+  renderFeatured();
+  renderNearby();
+}
+
+function setFilter(val, btn) {
+  currentFilter = val;
+  document.querySelectorAll('.chip').forEach(c => c.className = 'chip inactive');
+  btn.className = 'chip active';
+  applyFilters();
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  applyFilters();
+}
+
+function showAll() {
+  setFilter('Todos', document.querySelector('.chip'));
+}
+
+// ─── Render featured ─────────────────────────────────────────────
+function renderFeatured() {
+  const el = document.getElementById('featuredScroll');
+  const disponibles = filtered.filter(p => p.estado === 'disponible');
+  if (!disponibles.length) {
+    el.innerHTML = '<div class="state-msg">Sin mascotas disponibles con esos filtros 🐾</div>';
+    return;
+  }
+  el.innerHTML = disponibles.slice(0, 2).map(p => `
+    <div class="featured-card" onclick="openModal(${p.id})">
+      <img src="${imgSrc(p)}" alt="${p.nombre}"
+           onerror="this.src='https://placehold.co/300x200/FDF6F0/F4646A?text=🐾'">
+      <div class="featured-overlay">
+        <div class="featured-name">${p.nombre}</div>
+        <div class="featured-breed">${p.especie}${p.edad ? ' · ' + p.edad : ''}</div>
+        <div class="featured-meta">
+          <svg width="12" height="12" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>${p.sexo || 'Disponible'}</span>
+        </div>
+      </div>
+      <div class="featured-badge"
+           onclick="event.stopPropagation(); toggleLikeById(${p.id})"
+           id="heart-feat-${p.id}">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
+            fill="${likedSet.has(p.id) ? '#F4646A' : 'none'}"
+            stroke="#F4646A" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="adoption-tag">Adopción gratis</div>
+    </div>
+  `).join('');
+}
+
+// ─── Render nearby ────────────────────────────────────────────────
+function renderNearby() {
+  const el = document.getElementById('nearbyList');
+  const rest = filtered.slice(2);
+  document.getElementById('nearbyTitle').textContent =
+    currentFilter === 'Todos' ? 'Todos disponibles' : currentFilter + 's disponibles';
+
+  if (!rest.length) { el.innerHTML = ''; return; }
+
+  el.innerHTML = rest.map(p => `
+    <div class="nearby-card" onclick="openModal(${p.id})">
+      <img class="nearby-img" src="${imgSrc(p)}" alt="${p.nombre}"
+           onerror="this.src='https://placehold.co/70x70/FDF6F0/F4646A?text=🐾'">
+      <div class="nearby-info">
+        <div class="nearby-name">${p.nombre}</div>
+        <div class="nearby-breed">${p.especie}${p.edad ? ' · ' + p.edad : ''}</div>
+        <div class="nearby-meta">
+          <svg width="12" height="12" fill="none" stroke="#8A6F6F" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+          </svg>
+          <span>${p.sexo || 'Disponible'}</span>
+        </div>
+        <div class="nearby-free">${p.estado === 'adoptado' ? '✓ Ya adoptado' : '🎉 Adopción gratuita'}</div>
+      </div>
+      <div class="nearby-heart ${likedSet.has(p.id) ? 'liked' : ''}"
+           onclick="event.stopPropagation(); toggleLikeById(${p.id})"
+           id="heart-near-${p.id}">
+        <svg width="20" height="20" viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
+            stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── Like ─────────────────────────────────────────────────────────
+function toggleLikeById(id) {
+  if (likedSet.has(id)) likedSet.delete(id); else likedSet.add(id);
+  applyFilters(); // re-render para actualizar corazones
+}
+
+// ─── Modal ────────────────────────────────────────────────────────
+function openModal(id) {
+  const p = allPets.find(a => a.id === id);
+  if (!p) return;
+  currentPet = p;
+
+  document.getElementById('modalImg').src = imgSrc(p);
+  document.getElementById('modalName').textContent = p.nombre;
+  document.getElementById('modalBreed').textContent = p.especie;
+
+  const estadoEl = document.getElementById('modalEstado');
+  estadoEl.textContent = p.estado === 'adoptado' ? '✓ Ya adoptado' : '✓ Disponible';
+  estadoEl.className   = 'badge-estado ' + (p.estado === 'adoptado' ? 'badge-adoptado' : 'badge-disponible');
+
+  const tags = [];
+  if (p.edad) tags.push(p.edad);
+  if (p.sexo) tags.push(p.sexo);
+  if (p.estado !== 'adoptado') tags.push('Adopción gratuita 🎉');
+  document.getElementById('modalTags').innerHTML =
+    tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+
+  document.getElementById('modalDesc').textContent =
+    p.descripcion || 'Este adorable amigo está esperando su hogar para siempre. ¡Anímate a adoptarlo!';
+
+  const btn = document.getElementById('modalBtn');
+  if (p.estado === 'adoptado') {
+    btn.textContent        = '✓ Este amiguito ya fue adoptado';
+    btn.style.background   = '#ccc';
+    btn.style.cursor       = 'default';
+    btn.onclick            = null;
+  } else {
+    btn.textContent        = '🐾 Quiero adoptarlo — ¡Es gratis!';
+    btn.style.background   = 'var(--rose)';
+    btn.style.cursor       = 'pointer';
+    btn.onclick            = contactAdopt;
+  }
+
+  document.getElementById('modalBg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target.id === 'modalBg') closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modalBg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function contactAdopt() {
+  if (!currentPet) return;
+  alert(`¡Genial! Querés adoptar a ${currentPet.nombre} 🐾\n\n${CONTACTO}\n\n¡La adopción es completamente gratuita!`);
+}
+
+function showFavorites() {
+  if (likedSet.size === 0) {
+    alert('Todavía no marcaste favoritos.\nTocá el ❤️ en las tarjetas para guardar mascotas.');
+    return;
+  }
+  const favs = allPets.filter(p => likedSet.has(p.id));
+  alert('Tus favoritos:\n' + favs.map(p => `• ${p.nombre} (${p.especie})`).join('\n'));
+}
+
+// ─── Init ─────────────────────────────────────────────────────────
+loadPets();
+</script>
+</body>
+</html>
