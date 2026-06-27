@@ -56,8 +56,8 @@
       --sombra-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
 
       /* Radios y alturas */
-      --r-card: 24px;
-      --r-chip: 100px;
+      --r-card: 0px;
+      --r-chip: 0px;
       --nav-h: 72px;
 
       /* Transiciones */
@@ -99,7 +99,7 @@
 
     ::-webkit-scrollbar-thumb {
       background: var(--texto-light);
-      border-radius: var(--r-chip);
+      border-radius: 0;
     }
 
     ::-webkit-scrollbar-thumb:hover {
@@ -129,7 +129,7 @@
       padding: 40px 24px 32px;
       position: relative;
       overflow: hidden;
-      border-radius: 0 0 32px 32px;
+      border-radius: 0;
       box-shadow: var(--sombra);
     }
 
@@ -140,7 +140,7 @@
       right: -50px;
       width: 180px;
       height: 180px;
-      border-radius: 50%;
+      border-radius: 0;
       background: rgba(245, 158, 11, 0.15);
       pointer-events: none;
       filter: blur(10px);
@@ -153,7 +153,7 @@
       left: -40px;
       width: 150px;
       height: 150px;
-      border-radius: 50%;
+      border-radius: 0;
       background: rgba(255, 255, 255, 0.05);
       pointer-events: none;
     }
@@ -204,7 +204,7 @@
     .hero-box {
       margin: 20px 24px;
       background: var(--blanco);
-      border-radius: var(--r-card);
+      border-radius: 0;
       overflow: hidden;
       box-shadow: var(--sombra);
       border: 1px solid var(--borde);
@@ -226,7 +226,7 @@
       padding: 6px 14px;
       background: var(--amarillo-pale);
       color: var(--amarillo-dark);
-      border-radius: var(--r-chip);
+      border-radius: 0;
       font-size: 12px;
       font-weight: 800;
       margin-bottom: 12px;
@@ -255,7 +255,7 @@
       color: var(--blanco);
       border: none;
       padding: 14px;
-      border-radius: 16px;
+      border-radius: 0;
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
@@ -281,7 +281,7 @@
 
     .stat-card {
       background: var(--blanco);
-      border-radius: var(--r-card);
+      border-radius: 0;
       padding: 16px 12px;
       text-align: center;
       box-shadow: var(--sombra-sm);
@@ -316,7 +316,7 @@
 
     .process-card {
       background: var(--blanco);
-      border-radius: var(--r-card);
+      border-radius: 0;
       padding: 20px;
       border: 1px solid var(--borde);
       box-shadow: var(--sombra-sm);
@@ -344,7 +344,7 @@
       height: 40px;
       background: var(--azul-pale);
       color: var(--azul-primary);
-      border-radius: 50%;
+      border-radius: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -392,7 +392,7 @@
       gap: 10px;
       background: var(--blanco);
       border: 1.5px solid var(--borde);
-      border-radius: var(--r-chip);
+      border-radius: 0;
       padding: 0 18px;
       height: 52px;
       box-shadow: var(--sombra);
@@ -433,7 +433,7 @@
     .clear-search-btn {
       width: 52px;
       height: 52px;
-      border-radius: 16px;
+      border-radius: 0;
       background: var(--amarillo);
       border: none;
       cursor: pointer;
@@ -472,7 +472,7 @@
 
     .filter-chip {
       padding: 10px 20px;
-      border-radius: var(--r-chip);
+      border-radius: 0;
       font-family: inherit;
       font-size: 14px;
       font-weight: 700;
@@ -517,7 +517,7 @@
     .select-wrap select {
       width: 100%;
       height: 44px;
-      border-radius: 14px;
+      border-radius: 0;
       border: 1.5px solid var(--borde);
       background: var(--blanco);
       padding: 0 16px;
@@ -566,7 +566,7 @@
       color: var(--azul-primary);
       background: var(--azul-pale);
       padding: 4px 12px;
-      border-radius: var(--r-chip);
+      border-radius: 0;
     }
 
     .featured-carousel-title {
@@ -590,7 +590,7 @@
       position: relative;
       min-width: 290px;
       height: 220px;
-      border-radius: var(--r-card);
+      border-radius: 0;
       overflow: hidden;
       flex-shrink: 0;
       cursor: pointer;
@@ -659,7 +659,7 @@
       top: 16px;
       right: 16px;
       background: rgba(255, 255, 255, 0.95);
-      border-radius: 50%;
+      border-radius: 0;
       width: 38px;
       height: 38px;
       display: flex;
@@ -702,7 +702,7 @@
       color: var(--azul-oscuro);
       font-size: 11px;
       font-weight: 800;
-      border-radius: var(--r-chip);
+      border-radius: 0;
       padding: 5px 12px;
       box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
       letter-spacing: 0.2px;
@@ -718,7 +718,7 @@
 
     .pet-card {
       background: var(--card-bg);
-      border-radius: var(--r-card);
+      border-radius: 0;
       padding: 16px;
       display: flex;
       align-items: center;
@@ -739,7 +739,7 @@
     .pet-card-img {
       width: 80px;
       height: 80px;
-      border-radius: 18px;
+      border-radius: 0;
       object-fit: cover;
       flex-shrink: 0;
       background: var(--azul-pale);
@@ -801,7 +801,7 @@
     .pet-card-heart {
       width: 36px;
       height: 36px;
-      border-radius: 50%;
+      border-radius: 0;
       background: var(--azul-pale);
       display: flex;
       align-items: center;
@@ -853,7 +853,7 @@
       color: var(--azul-oscuro);
       margin: 0 24px 20px;
       padding: 16px;
-      border-radius: 20px;
+      border-radius: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -876,7 +876,7 @@
       display: none;
       margin: 0 24px 24px;
       background: var(--blanco);
-      border-radius: var(--r-card);
+      border-radius: 0;
       padding: 24px;
       border: 1px solid var(--borde);
       box-shadow: var(--sombra);
@@ -921,7 +921,7 @@
     .form-group select {
       width: 100%;
       padding: 12px 14px;
-      border-radius: 12px;
+      border-radius: 0;
       border: 1.5px solid var(--borde);
       font-family: inherit;
       font-size: 14px;
@@ -948,7 +948,7 @@
       color: var(--blanco);
       border: none;
       padding: 14px;
-      border-radius: 14px;
+      border-radius: 0;
       font-size: 15px;
       font-weight: 800;
       cursor: pointer;
@@ -970,7 +970,7 @@
 
     .alert-item-card {
       background: var(--blanco);
-      border-radius: var(--r-card);
+      border-radius: 0;
       padding: 16px;
       border: 1px solid var(--borde);
       box-shadow: var(--sombra-sm);
@@ -987,7 +987,7 @@
       font-size: 11px;
       font-weight: 800;
       padding: 4px 10px;
-      border-radius: var(--r-chip);
+      border-radius: 0;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -1017,7 +1017,7 @@
     .alert-img {
       width: 64px;
       height: 64px;
-      border-radius: 14px;
+      border-radius: 0;
       object-fit: cover;
       flex-shrink: 0;
       background: var(--azul-pale);
@@ -1060,7 +1060,7 @@
       color: var(--azul-primary);
       background: var(--azul-pale);
       padding: 6px 12px;
-      border-radius: 10px;
+      border-radius: 0;
       text-decoration: none;
       margin-top: 10px;
       transition: background 0.2s;
@@ -1080,7 +1080,7 @@
 
     .info-accordion {
       background: var(--blanco);
-      border-radius: var(--r-card);
+      border-radius: 0;
       border: 1px solid var(--borde);
       box-shadow: var(--sombra-sm);
       overflow: hidden;
@@ -1156,7 +1156,7 @@
     /* ─── 5. PESTAÑA NOSOTROS / AYUDA (#nosotros) ─── */
     .about-card {
       background: var(--blanco);
-      border-radius: var(--r-card);
+      border-radius: 0;
       padding: 24px;
       margin: 24px;
       border: 1px solid var(--borde);
@@ -1189,7 +1189,7 @@
 
     .donation-card {
       background: var(--blanco);
-      border-radius: var(--r-card);
+      border-radius: 0;
       padding: 20px;
       border: 1.5px solid var(--borde);
       box-shadow: var(--sombra-sm);
@@ -1215,7 +1215,7 @@
     .donation-data-row {
       background: var(--fondo);
       padding: 12px 14px;
-      border-radius: 12px;
+      border-radius: 0;
       margin-bottom: 10px;
       display: flex;
       align-items: center;
@@ -1241,7 +1241,7 @@
       font-size: 11px;
       font-weight: 800;
       padding: 6px 10px;
-      border-radius: 8px;
+      border-radius: 0;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -1263,7 +1263,7 @@
       border-left: 5px solid var(--amarillo);
       padding: 18px;
       margin: 0 24px 24px;
-      border-radius: 0 16px 16px 0;
+      border-radius: 0;
       font-size: 13px;
       color: var(--amarillo-dark);
       font-weight: 700;
@@ -1311,7 +1311,7 @@
       -webkit-backdrop-filter: blur(28px);
       border: 1px solid rgba(255, 255, 255, 0.4);
       /* Resplandor de borde blanco */
-      border-radius: 28px;
+      border-radius: 0;
       width: 100%;
       max-width: 500px;
       max-height: 85vh;
@@ -1329,7 +1329,7 @@
       position: relative;
       height: 250px;
       background: var(--azul-pale);
-      border-radius: 28px 28px 0 0;
+      border-radius: 0;
       overflow: hidden;
     }
 
@@ -1346,7 +1346,7 @@
       right: 18px;
       width: 38px;
       height: 38px;
-      border-radius: 50%;
+      border-radius: 0;
       background: rgba(255, 255, 255, 0.9);
       border: none;
       cursor: pointer;
@@ -1372,7 +1372,7 @@
     .modal-estado-tag {
       display: inline-block;
       padding: 5px 12px;
-      border-radius: var(--r-chip);
+      border-radius: 0;
       font-size: 12px;
       font-weight: 800;
       margin-bottom: 12px;
@@ -1416,7 +1416,7 @@
       background: rgba(30, 58, 138, 0.05);
       color: var(--azul-primary);
       padding: 6px 14px;
-      border-radius: var(--r-chip);
+      border-radius: 0;
       font-size: 12px;
       font-weight: 800;
       border: 1px solid rgba(30, 58, 138, 0.08);
@@ -1443,7 +1443,7 @@
       color: var(--blanco);
       border: none;
       padding: 16px;
-      border-radius: 18px;
+      border-radius: 0;
       font-family: 'Outfit', sans-serif;
       font-size: 16px;
       font-weight: 800;
@@ -1470,7 +1470,7 @@
       border-left: 4px solid var(--amarillo);
       padding: 14px 18px;
       margin: 16px 24px 8px;
-      border-radius: 12px;
+      border-radius: 0;
       font-size: 12px;
       color: var(--amarillo-dark);
       font-weight: 700;
@@ -1564,7 +1564,7 @@
       background: var(--azul-oscuro);
       color: var(--blanco);
       padding: 14px 24px;
-      border-radius: 16px;
+      border-radius: 0;
       font-size: 14px;
       font-weight: 700;
       z-index: 1000;
@@ -1609,7 +1609,7 @@
       height: 40px;
       border: 3.5px solid var(--azul-pale);
       border-top-color: var(--azul-primary);
-      border-radius: 50%;
+      border-radius: 0;
       animation: spin 0.8s linear infinite;
     }
 
@@ -1637,7 +1637,7 @@
 
       .section-header-banner {
         padding: 64px 0 48px;
-        border-radius: 0 0 40px 40px;
+        border-radius: 0;
       }
 
       .banner-title {
@@ -1911,7 +1911,7 @@
             <span class="hero-badge">ADOPCIÓN RESPONSABLE</span>
             <h2 class="hero-title">Dale una segunda oportunidad a un amigo</h2>
             <p class="hero-desc">Hay decenas de animales esperando un hogar cálido en Durazno. La adopción es 100%
-              gratuita y salva lives.</p>
+              gratuita y salva vidas.</p>
             <button class="hero-btn" onclick="navigateToTab('adopciones')">
               Ver mascotas disponibles 🐶
             </button>
@@ -2049,36 +2049,72 @@
     </div>
 
     <!-- ─────────────────────────────────────────────────────────────────
-       3. PESTAÑA ALERTAS (#alertas)
-  <!-- ───────────────────────────────────────────────────────────────── -->
-       <div id="alertas" class="tab-content">
-  <div class="section-header-banner">
-    <div class="content-wrapper">
-      <div class="banner-subtitle">Comunidad Durazno</div>
-      <h1 class="banner-title">🚧 <span>Funcionalidad en Construcción</span></h1>
-    </div>
-  </div>
+       3. PESTAÑA VETERINARIAS (#alertas → reutilizamos el id/hash)
+       ───────────────────────────────────────────────────────────────── -->
+    <div id="alertas" class="tab-content">
+      <div class="section-header-banner">
+        <div class="content-wrapper">
+          <div class="banner-subtitle">Durazno, Uruguay</div>
+          <h1 class="banner-title">Veterinarias <span>de Durazno</span> 🏥</h1>
+        </div>
+      </div>
 
-  <div class="content-wrapper">
-    <div style="
-      text-align: center;
-      padding: 60px 20px;
-      background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
-      margin: 30px auto;
-      max-width: 700px;
-    ">
-      <div style="font-size: 70px;">🚧</div>
-      <h2 style="margin: 15px 0; color: #333;">
-        Ya nos encontramos trabajando en esta sección para que puedas recibir alertas y reportes de mascotas perdidas o encontradas en Durazno.
-      </h2>
-      <p style="font-size: 18px; color: #666; line-height: 1.6;">
-        Gracias por tu paciencia. ❤️🐾
-      </p>
+      <div class="content-wrapper">
+
+        <!-- INDICADOR ABIERTO/CERRADO AHORA -->
+        <div id="vetStatusBar" style="
+          background: var(--azul-pale);
+          border-left: 4px solid var(--azul-primary);
+          padding: 12px 24px;
+          font-size: 13px;
+          font-weight: 700;
+          color: var(--azul-primary);
+          margin-bottom: 4px;
+        ">
+          Consultando horarios...
+        </div>
+
+        <!-- BUSCADOR -->
+        <div style="padding: 16px 24px 8px;">
+          <div class="search-input-field" style="max-width:100%;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" id="vetSearch" placeholder="Buscar veterinaria..." oninput="filterVets()">
+          </div>
+        </div>
+
+        <!-- CARDS DE VETERINARIAS -->
+        <div id="vetList" style="display:flex; flex-direction:column; gap:0; padding: 0 24px 16px;"></div>
+
+        <!-- MAPA -->
+        <div style="padding: 0 24px 32px;">
+          <div style="
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--azul-oscuro);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          ">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            Mapa de veterinarias
+          </div>
+          <div style="width:100%; height:340px; overflow:hidden; border:1px solid var(--borde); box-shadow: var(--sombra-sm);">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d13344.5!2d-56.5231!3d-33.3793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sveterinaria%20durazno%20uruguay!5e0!3m2!1ses!2suy!4v1"
+              width="100%" height="340" style="border:0; display:block;"
+              allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
-</div>
 
     <!-- ─────────────────────────────────────────────────────────────────
        4. PESTAÑA INFORMACIÓN (#informacion)
@@ -2292,11 +2328,13 @@
         </a>
         <a href="#alertas" class="nav-item" id="nav-alertas">
           <div class="nav-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24">
-              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" />
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              <path d="M9 22V12h6v10"/>
+              <circle cx="12" cy="7" r="1" fill="currentColor"/>
             </svg>
           </div>
-          <span class="nav-label">Alertas</span>
+          <span class="nav-label">Veterinarias</span>
         </a>
         <a href="#informacion" class="nav-item" id="nav-informacion">
           <div class="nav-icon">
@@ -2519,8 +2557,9 @@
         allPets = parsedRows.map((r, index) => {
           const estadoRaw = (r['estado'] || '').toLowerCase().trim();
           let estado = 'disponible';
-          // Si dice "adoptado" es ya adoptado. Si está vacío o es otra cosa, disponible.
-          if (/\badoptado\b/.test(estadoRaw) && !/\ben\s+adop/.test(estadoRaw)) {
+          // "Adoptada" o "Adoptado" = ya tiene hogar
+          // "En Adopción" o cualquier otra cosa = disponible
+          if (/^adoptad[ao]$/.test(estadoRaw)) {
             estado = 'adoptado';
           }
 
@@ -2669,34 +2708,98 @@
       }
 
       container.innerHTML = filteredPets.map(p => {
-        const isLiked = likedSet.has(p.id);
         const fallbackImage = 'https://placehold.co/120x120/EFF6FF/1E3A8A?text=🐾';
         const imageSrc = p.imagen || fallbackImage;
-        const statusClass = p.estado === 'disponible' ? 'disponible' : 'adoptado';
-        const statusLabel = p.estado === 'disponible' ? '✓ Disponible para Adopción' : '✓ Ya Adoptado 🎉';
 
-        return `
-      <div class="pet-card" onclick="openPetModal(${p.id})">
-        <img class="pet-card-img" src="${imageSrc}" alt="${p.nombre}" onerror="handleImageError(this, '${fallbackImage}')">
-        <div class="pet-card-info">
-          <div class="pet-card-name">${p.nombre}</div>
-          <div class="pet-card-breed">${p.especie} · ${p.edad} años </div>
-          <div class="pet-card-meta">
-            <span class="meta-item">
-              <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-              ${p.sexo}
-            </span>
+        if (p.estado === 'adoptado') {
+          // ── CARD ADOPTADO ──
+          return `
+        <div class="pet-card" style="
+          background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+          border: 1.5px solid #86efac;
+          opacity: 0.85;
+          cursor: default;
+          position: relative;
+          overflow: hidden;
+        ">
+          <!-- Sello diagonal -->
+          <div style="
+            position: absolute;
+            top: 14px; right: -22px;
+            background: var(--green);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 4px 28px;
+            transform: rotate(35deg);
+            letter-spacing: .6px;
+            box-shadow: 0 2px 6px rgba(16,185,129,.3);
+            z-index: 2;
+          ">ADOPTADO</div>
+
+          <!-- Foto con overlay verde -->
+          <div style="position:relative;flex-shrink:0;">
+            <img class="pet-card-img" src="${imageSrc}" alt="${p.nombre}"
+                 onerror="handleImageError(this,'${fallbackImage}')"
+                 style="filter: grayscale(20%) brightness(.95);">
+            <div style="
+              position:absolute;inset:0;
+              background:rgba(16,185,129,.15);
+              display:flex;align-items:center;justify-content:center;
+              font-size:26px;
+            "></div>
           </div>
-          <div class="pet-card-status ${statusClass}">${statusLabel}</div>
-        </div>
-        <button class="pet-card-heart ${isLiked ? 'liked' : ''}" 
-                onclick="event.stopPropagation(); toggleLike(${p.id}, this)">
-          <svg width="18" height="18" viewBox="0 0 24 24">
-            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-          </svg>
-        </button>
-      </div>
-    `;
+
+          <div class="pet-card-info">
+            <div class="pet-card-name" style="color:var(--azul-oscuro);">${p.nombre}</div>
+            <div class="pet-card-breed">${p.especie} · ${p.edad}</div>
+            <div style="
+              margin-top: 8px;
+              font-size: 13px;
+              font-weight: 800;
+              color: var(--green);
+              display: flex;
+              align-items: center;
+              gap: 5px;
+            ">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              ¡Conseguí un hogar!
+            </div>
+            <div style="font-size:11px;color:#6b7280;font-weight:600;margin-top:3px;">
+              Gracias a quien lo adoptó 🐾
+            </div>
+          </div>
+        </div>`;
+
+        } else {
+          // ── CARD DISPONIBLE ──
+          const isLiked = likedSet.has(p.id);
+          return `
+        <div class="pet-card" onclick="openPetModal(${p.id})">
+          <img class="pet-card-img" src="${imageSrc}" alt="${p.nombre}"
+               onerror="handleImageError(this,'${fallbackImage}')">
+          <div class="pet-card-info">
+            <div class="pet-card-name">${p.nombre}</div>
+            <div class="pet-card-breed">${p.especie} · ${p.edad}</div>
+            <div class="pet-card-meta">
+              <span class="meta-item">
+                <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                ${p.sexo}
+              </span>
+            </div>
+            <div class="pet-card-status disponible">✓ Disponible para Adopción</div>
+          </div>
+          <button class="pet-card-heart ${isLiked ? 'liked' : ''}"
+                  onclick="event.stopPropagation(); toggleLike(${p.id}, this)">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+            </svg>
+          </button>
+        </div>`;
+        }
       }).join('');
     }
 
@@ -2933,13 +3036,300 @@
       }, 2200);
     }
 
-    // ─── INICIALIZACIÓN GLOBAL DE LA APLICACIÓN ───
+    // ─── VETERINARIAS DE DURAZNO ───
+    const VETS = [
+      {
+        nombre: "Clínica Médica Veterinaria",
+        direccion: "M. Oribe 589, Durazno",
+        telefonos: ["4362 3378", "099 362 078"],
+        horarios: {
+          lunes:    ["8:30–12:00", "15:00–19:00"],
+          martes:   ["8:30–12:00", "15:00–19:00"],
+          miercoles:["8:30–12:00", "15:00–19:00"],
+          jueves:   ["8:30–12:00", "15:00–19:00"],
+          viernes:  ["8:30–12:00", "15:00–19:00"],
+          sabado:   ["8:30–13:30"],
+          domingo:  []
+        }
+      },
+      {
+        nombre: "Agroveterinaria Lipa",
+        direccion: "Av. Circunvalación 264, Durazno",
+        telefonos: ["4362 2065"],
+        horarios: {
+          lunes:    ["8:00–12:00", "14:00–18:30"],
+          martes:   ["8:00–12:00", "14:00–18:30"],
+          miercoles:["8:00–12:00", "14:00–18:30"],
+          jueves:   ["8:00–12:00", "14:00–18:30"],
+          viernes:  ["8:00–12:00", "14:00–19:30"],
+          sabado:   ["8:00–12:30"],
+          domingo:  []
+        }
+      },
+      {
+        nombre: "La Clínica Dur",
+        direccion: "19 de Abril entre Artigas y 18 de Julio, Durazno",
+        telefonos: ["4362 5050"],
+        horarios: {
+          lunes:    ["8:30–12:00", "14:30–19:00"],
+          martes:   ["8:30–12:00", "14:30–19:00"],
+          miercoles:["8:30–12:00", "14:30–19:00"],
+          jueves:   ["8:30–12:00", "14:30–19:00"],
+          viernes:  ["8:30–12:00", "14:30–19:00"],
+          sabado:   ["8:30–12:30"],
+          domingo:  []
+        }
+      },
+      {
+        nombre: "Veterinaria El Lugar",
+        direccion: "19 de Abril 923 Bis, Durazno",
+        telefonos: ["4362 4530"],
+        horarios: {
+          lunes:    ["8:30–12:30", "14:30–19:00"],
+          martes:   ["8:30–12:30", "14:30–19:00"],
+          miercoles:["8:30–12:30", "14:30–19:00"],
+          jueves:   ["8:30–12:30", "14:30–19:00"],
+          viernes:  ["8:30–12:30", "14:30–19:00"],
+          sabado:   [],
+          domingo:  []
+        }
+      },
+      {
+        nombre: "Veterinaria Dumbo",
+        direccion: "Oribe 892, Durazno",
+        telefonos: ["4362 8116"],
+        horarios: {
+          lunes:    ["8:00–12:30", "15:00–19:30"],
+          martes:   ["8:00–12:30", "15:00–19:30"],
+          miercoles:["8:00–12:30", "15:00–19:30"],
+          jueves:   ["8:00–12:30", "15:00–19:30"],
+          viernes:  ["8:00–12:30", "15:00–19:30"],
+          sabado:   ["8:00–13:00"],
+          domingo:  []
+        }
+      },
+      {
+        nombre: "Agropecuaria Durazno",
+        direccion: "Eusebio Piriz 919, Durazno",
+        telefonos: ["4362 3388", "4362 2039", "099 355 747"],
+        email: "agropecu@adinet.com.uy",
+        horarios: {
+          lunes:    ["8:00–12:00", "15:00–19:00"],
+          martes:   ["8:00–12:00", "15:00–19:00"],
+          miercoles:["8:00–12:00", "15:00–19:00"],
+          jueves:   ["8:00–12:00", "15:00–19:00"],
+          viernes:  ["8:00–12:00", "15:00–19:00"],
+          sabado:   [],
+          domingo:  []
+        }
+      },
+      {
+        nombre: "Veterinaria Dog y Cat",
+        direccion: "Galarza 845 esq. Washington, Durazno",
+        telefonos: ["098 922 822"],
+        email: "mainesdsh@gmail.com",
+        horarios: {
+          lunes:    ["8:30–12:30", "15:00–19:00"],
+          martes:   ["8:30–12:30", "15:00–19:00"],
+          miercoles:["8:30–12:30", "15:00–19:00"],
+          jueves:   ["8:30–12:30", "15:00–19:00"],
+          viernes:  ["8:30–12:30", "15:00–19:00"],
+          sabado:   ["8:30–13:00"],
+          domingo:  []
+        }
+      },
+      {
+        nombre: "Veterinaria La Ruta",
+        direccion: "18 de Julio 386, Durazno",
+        telefonos: ["4362 2977"],
+        email: "larutasrl@adinet.com.uy",
+        horarios: {
+          lunes:    ["7:00–12:00", "14:00–19:00"],
+          martes:   ["7:00–12:00", "14:00–19:00"],
+          miercoles:["7:00–12:00", "14:00–19:00"],
+          jueves:   ["7:00–12:00", "14:00–19:00"],
+          viernes:  ["7:00–12:00", "14:00–19:00"],
+          sabado:   ["7:00–12:30"],
+          domingo:  []
+        }
+      }
+    ];
+
+    const DIAS_KEY = ['domingo','lunes','martes','miercoles','jueves','viernes','sabado'];
+    const DIAS_ES  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+
+    function isVetOpen(vet) {
+      const now  = new Date();
+      const dia  = DIAS_KEY[now.getDay()];
+      const hMin = now.getHours() * 60 + now.getMinutes();
+      const slots = vet.horarios[dia] || [];
+      if (!slots.length) return false;
+      return slots.some(slot => {
+        const [from, to] = slot.split('–');
+        const toMin = t => { const [h,m] = t.split(':').map(Number); return h*60+(m||0); };
+        return hMin >= toMin(from) && hMin < toMin(to);
+      });
+    }
+
+    function getTodaySchedule(vet) {
+      const dia   = DIAS_KEY[new Date().getDay()];
+      const slots = vet.horarios[dia] || [];
+      return slots.length ? slots.join(' · ') : 'Cerrado hoy';
+    }
+
+    function buildVetCard(vet) {
+      const open   = isVetOpen(vet);
+      const todayTxt = getTodaySchedule(vet);
+      const statusColor = open ? 'var(--green)' : 'var(--rose)';
+      const statusBg    = open ? 'var(--green-light)' : 'var(--rose-light)';
+      const statusLabel = open ? '● Abierto ahora' : '● Cerrado ahora';
+
+      const tels = vet.telefonos.map(t =>
+        `<a href="tel:${t.replace(/\s/g,'')}" style="color:var(--azul-primary);text-decoration:none;font-weight:700;font-size:13px;">${t}</a>`
+      ).join(' · ');
+
+      const email = vet.email
+        ? `<div style="margin-top:4px;"><a href="mailto:${vet.email}" style="color:var(--texto-soft);font-size:12px;font-weight:600;">${vet.email}</a></div>`
+        : '';
+
+      // Horario completo colapsable
+      const horariosRows = DIAS_KEY.map((d, i) => {
+        const slots = vet.horarios[d] || [];
+        const txt   = slots.length ? slots.join(' · ') : 'Cerrado';
+        const esHoy = new Date().getDay() === i;
+        return `<tr style="background:${esHoy ? 'var(--azul-pale)' : 'transparent'}">
+          <td style="padding:5px 10px;font-weight:${esHoy?'800':'600'};font-size:12px;color:var(--azul-oscuro);white-space:nowrap;">${DIAS_ES[i]}</td>
+          <td style="padding:5px 10px;font-size:12px;color:${slots.length?'var(--texto-soft)':'var(--rose)'};font-weight:600;">${txt}</td>
+        </tr>`;
+      }).join('');
+
+      const uid = 'vet_' + vet.nombre.replace(/\s/g,'_');
+
+      return `
+      <div class="vet-card" data-nombre="${vet.nombre.toLowerCase()}" style="
+        background:var(--card-bg);
+        border:1px solid var(--borde);
+        box-shadow:var(--sombra-sm);
+        margin-bottom:14px;
+        overflow:hidden;
+      ">
+        <!-- Header -->
+        <div style="padding:16px 16px 12px; cursor:pointer;" onclick="toggleVetCard('${uid}')">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+            <div style="flex:1;">
+              <div style="font-size:15px;font-weight:800;color:var(--azul-oscuro);margin-bottom:3px;">${vet.nombre}</div>
+              <div style="font-size:12px;color:var(--texto-soft);font-weight:600;display:flex;align-items:center;gap:5px;">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                ${vet.direccion}
+              </div>
+            </div>
+            <div style="
+              font-size:11px;font-weight:800;padding:4px 10px;
+              background:${statusBg};color:${statusColor};
+              white-space:nowrap;flex-shrink:0;
+            ">${statusLabel}</div>
+          </div>
+          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <div style="font-size:12px;color:var(--texto-soft);font-weight:700;">
+              🕐 Hoy: <strong style="color:var(--azul-oscuro);">${todayTxt}</strong>
+            </div>
+            <div style="font-size:11px;color:var(--azul-primary);font-weight:800;" id="chevron-${uid}">Ver horarios ▾</div>
+          </div>
+        </div>
+
+        <!-- Horario completo (colapsable) -->
+        <div id="${uid}" style="display:none; border-top:1px solid var(--borde);">
+          <table style="width:100%;border-collapse:collapse;">${horariosRows}</table>
+          <div style="padding:12px 16px;border-top:1px solid var(--borde);display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+            <div style="flex:1;min-width:0;">${tels}${email}</div>
+            <a href="https://wa.me/${vet.telefonos[0].replace(/\D/g,'').startsWith('09') ? '598'+vet.telefonos[0].replace(/\D/g,'').substring(1) : '598'+vet.telefonos[0].replace(/\D/g,'')}"
+               target="_blank"
+               style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;font-size:12px;font-weight:800;padding:8px 14px;text-decoration:none;flex-shrink:0;">
+              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.99.583 3.842 1.585 5.395L2 22l4.737-1.56A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function toggleVetCard(uid) {
+      const el  = document.getElementById(uid);
+      const chv = document.getElementById('chevron-' + uid);
+      if (!el) return;
+      const open = el.style.display === 'block';
+      el.style.display  = open ? 'none' : 'block';
+      chv.textContent   = open ? 'Ver horarios ▾' : 'Ocultar ▴';
+    }
+
+    function renderVets(list) {
+      const container = document.getElementById('vetList');
+      if (!container) return;
+
+      const abiertas = list.filter(v => isVetOpen(v));
+      const cerradas = list.filter(v => !isVetOpen(v));
+
+      let html = '';
+
+      if (abiertas.length) {
+        html += `<div style="font-size:12px;font-weight:800;color:var(--green);letter-spacing:.8px;text-transform:uppercase;padding:8px 0 10px;display:flex;align-items:center;gap:6px;">
+          <span style="width:8px;height:8px;background:var(--green);display:inline-block;"></span>
+          Abiertas ahora (${abiertas.length})
+        </div>`;
+        html += abiertas.map(buildVetCard).join('');
+      }
+
+      if (cerradas.length) {
+        html += `<div style="font-size:12px;font-weight:800;color:var(--texto-light);letter-spacing:.8px;text-transform:uppercase;padding:${abiertas.length ? '16px' : '8px'} 0 10px;display:flex;align-items:center;gap:6px;">
+          <span style="width:8px;height:8px;background:var(--texto-light);display:inline-block;"></span>
+          Cerradas ahora (${cerradas.length})
+        </div>`;
+        html += cerradas.map(buildVetCard).join('');
+      }
+
+      if (!list.length) {
+        html = `<div class="empty-state"><p>No se encontraron veterinarias.</p></div>`;
+      }
+
+      container.innerHTML = html;
+    }
+
+    function filterVets() {
+      const q = (document.getElementById('vetSearch')?.value || '').toLowerCase().trim();
+      const filtered = q ? VETS.filter(v =>
+        v.nombre.toLowerCase().includes(q) ||
+        v.direccion.toLowerCase().includes(q)
+      ) : VETS;
+      renderVets(filtered);
+    }
+
+    function updateVetStatusBar() {
+      const bar = document.getElementById('vetStatusBar');
+      if (!bar) return;
+      const openCount = VETS.filter(isVetOpen).length;
+      if (openCount === 0) {
+        bar.style.borderLeftColor = 'var(--rose)';
+        bar.style.color = 'var(--rose)';
+        bar.style.background = 'var(--rose-light)';
+        bar.textContent = '● Ninguna veterinaria abierta en este momento';
+      } else {
+        bar.style.borderLeftColor = 'var(--green)';
+        bar.style.color = 'var(--green)';
+        bar.style.background = 'var(--green-light)';
+        bar.textContent = `● ${openCount} veterinaria${openCount > 1 ? 's' : ''} abierta${openCount > 1 ? 's' : ''} ahora`;
+      }
+    }
     window.addEventListener('hashchange', router);
 
+    // ─── INICIALIZACIÓN GLOBAL DE LA APLICACIÓN ───
     document.addEventListener('DOMContentLoaded', () => {
       router();
       loadPetsData();
       loadAlerts();
+      renderVets(VETS);
+      updateVetStatusBar();
+      // Refrescar estado abierto/cerrado cada minuto
+      setInterval(updateVetStatusBar, 60000);
     });
   </script>
 </body>
