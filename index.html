@@ -1873,6 +1873,50 @@
         grid-template-columns: repeat(4, 1fr);
       }
     }
+    /* ─── DAR EN ADOPCIÓN — FORMULARIO ─── */
+    .field-lbl {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--azul-oscuro);
+      margin-bottom: 6px;
+    }
+    .field-inp {
+      width: 100%;
+      background: var(--fondo);
+      border: 1.5px solid #E2E8F0;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--texto);
+      font-weight: 600;
+      outline: none;
+      transition: border-color .2s, background .2s;
+      resize: none;
+    }
+    .field-inp:focus {
+      border-color: var(--azul-primary);
+      background: var(--blanco);
+    }
+    .field-inp::placeholder { color: var(--texto-light); }
+    .type-sel {
+      flex: 1;
+      padding: 9px 6px;
+      border: 1.5px solid #E2E8F0;
+      background: var(--fondo);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--texto-soft);
+      cursor: pointer;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .type-sel.sel {
+      background: var(--azul-pale);
+      border-color: var(--azul-primary);
+      color: var(--azul-primary);
+    }
   </style>
 </head>
 
@@ -1894,11 +1938,11 @@
       <div class="section-header-banner">
         <div class="content-wrapper">
           <div class="banner-subtitle">
-  <span font-size="1.5em" font-weight: bold; style="color: #ff7a00;">O</span>rganizacion de
-  <span font-weight: bold; style="color:  #ff7a00;">B</span>ienestar
-  <span  font-weight: bold; style="color: #ff7a00;">A</span>nimal
+  <span font-size="1.5em" font-weight: bold; style="color: #ff7a00;">A</span>dopciones
+  <span font-weight: bold; style="color:  #ff7a00;">D</span>urazno
+  
 </div>
-          <h1 class="banner-title">Encontrá a tu<br><span>compañero de vida</span> 🐾</h1>
+          <h1 class="banner-title">Encontrá a tu<br><span> nuevo compañero </span> 🐾</h1>
         </div>
       </div>
 
@@ -1912,13 +1956,18 @@
             <h2 class="hero-title">Dale una segunda oportunidad a un amigo</h2>
             <p class="hero-desc">Hay decenas de animales esperando un hogar cálido en Durazno. La adopción es 100%
               gratuita y salva vidas.</p>
-            <button class="hero-btn" onclick="navigateToTab('adopciones')">
-              Ver mascotas disponibles 🐶
-            </button>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">
+              <button class="hero-btn" onclick="navigateToTab('adopciones')" style="flex:1;min-width:140px;">
+                Ver adopciones 🐶
+              </button>
+              <button class="hero-btn" onclick="navigateToTab('nosotros')" style="flex:1;min-width:140px;background:transparent;border:2px solid var(--amarillo);color:var(--amarillo);">
+                Dar en adopción 
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- Estadísticas -->
+        <!-- Estadísticas 
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-num" id="statAdoptados">150+</div>
@@ -1933,7 +1982,7 @@
             <div class="stat-label">Gratuito</div>
           </div>
         </div>
-
+-->
         <!-- Proceso -->
         <div class="process-section">
           <h2 class="section-title-inline">
@@ -2238,68 +2287,136 @@
               </ul>
             </div>
           </div>
+
+          <!-- Acordeón 5 — Sobre este sitio -->
+          <div class="info-accordion" onclick="toggleAccordion(this)">
+            <div class="info-accordion-header">
+              <h2 class="info-accordion-title">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 8v4m0 4h.01"/>
+                </svg>
+                Sobre este sitio
+              </h2>
+              <span class="info-accordion-arrow">▼</span>
+            </div>
+            <div class="info-accordion-content">
+              <p>Esta plataforma fue desarrollada por <strong>ConectaTuMundo</strong> como una herramienta digital para facilitar la adopción responsable de animales en Durazno, Uruguay.</p>
+              <p>Nuestro objetivo es conectar a personas que quieren adoptar con animales que necesitan un hogar, de forma simple, gratuita y sin intermediarios.</p>
+              <p>
+                🌐 <a href="https://conectatumundo.net" target="_blank" style="color:var(--azul-primary);font-weight:800;text-decoration:none;">conectatumundo.net</a>
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
 
     <!-- ─────────────────────────────────────────────────────────────────
-       5. PESTAÑA NOSOTROS y AYUDA (#nosotros)
+       5. PESTAÑA DAR EN ADOPCIÓN (#nosotros)
        ───────────────────────────────────────────────────────────────── -->
     <div id="nosotros" class="tab-content">
       <div class="section-header-banner">
         <div class="content-wrapper">
-          <div class="banner-subtitle">Sobre Nosotros</div>
-          <h1 class="banner-title">¿Quiénes <span>Somos</span>? 🐾</h1>
+          <div class="banner-subtitle">Comunidad Durazno</div>
+          <h1 class="banner-title">Dar en <span>Adopción</span> 🏠</h1>
         </div>
       </div>
 
       <div class="content-wrapper">
-        <div class="about-card">
-          <p class="about-text">Somos un grupo de voluntarios unidos en <strong>Durazno, Uruguay</strong>, dedicados al
-            rescate de animales en situación de calle, maltrato o urgencia médica.</p>
-          <p class="about-text">Nuestra misión es rehabilitarlos, darles tránsito seguro y buscarles hogares definitivos
-            mediante la adopción responsable. Esta herramienta fue hecha por <a href="https://conectatumundo.net"
-             target="_blank" style="color: purple; text-decoration: underline;">conectatumundo</a> para ayudarnos en nuestra misión.</p>
+
+        <div class="about-card" style="margin-bottom:16px;">
+          <p class="about-text">Completá el formulario con los datos de tu animal. Nosotros revisamos la información y, si todo está en orden, lo publicamos en la sección de adopciones.</p>
+          <p class="about-text" style="margin-top:6px;font-size:13px;color:var(--texto-soft);">El mensaje se enviará por WhatsApp. No publicamos animales automáticamente — toda publicación pasa por revisión.</p>
         </div>
 
-        <!-- Donaciones -->
-        <h2 class="donation-section-title">💸 ¿Cómo colaborar con nosotros?</h2>
+        <!-- FORMULARIO -->
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px;">
 
-        <div class="donation-cards-wrap">
-          <!-- Cuenta 1 -->
-          <div class="donation-card">
-            <div class="donation-card-header">
-              <span class="donation-bank-name">🏦 BROU (Pesos)</span>
-            </div>
-            <p style="font-size: 13px; color: var(--texto-soft); margin-bottom: 8px;">Caja de Ahorro a nombre de Refugio
-              Durazno</p>
-            <div class="donation-data-row">
-              <span class="data-text" id="brouAcc">Caja de Ahorro: 123456789</span>
-              <button class="copy-btn" onclick="copyText('123456789', 'Caja de Ahorro BROU')">Copiar</button>
-            </div>
+          <!-- Nombre -->
+          <div>
+            <label class="field-lbl">Nombre del animal *</label>
+            <input type="text" id="daName" class="field-inp" placeholder="Ej: Fido, Luna, Sin nombre...">
           </div>
 
-          <!-- Cuenta 2 -->
-          <div class="donation-card">
-            <div class="donation-card-header">
-              <span class="donation-bank-name">📱 Mercado Pago / Redpagos</span>
+          <!-- Especie -->
+          <div>
+            <label class="field-lbl">Especie *</label>
+            <div style="display:flex;gap:8px;">
+              <button class="type-sel" onclick="selectEspecie(this,'Perro')">🐶 Perro</button>
+              <button class="type-sel" onclick="selectEspecie(this,'Gato')">🐱 Gato</button>
+              <button class="type-sel" onclick="selectEspecie(this,'Otro')">🐾 Otro</button>
             </div>
-            <p style="font-size: 13px; color: var(--texto-soft); margin-bottom: 8px;">Colectivo para urgencias
-              veterinarias</p>
-            <div class="donation-data-row">
-              <span class="data-text" id="mpAcc">Colectivo Redpagos N° 123456</span>
-              <button class="copy-btn" onclick="copyText('123456', 'Colectivo Redpagos')">Copiar</button>
-            </div>
+            <input type="hidden" id="daEspecie">
           </div>
+
+          <!-- Sexo -->
+          <div>
+            <label class="field-lbl">Sexo *</label>
+            <div style="display:flex;gap:8px;">
+              <button class="type-sel" onclick="selectSexo(this,'Macho')">♂ Macho</button>
+              <button class="type-sel" onclick="selectSexo(this,'Hembra')">♀ Hembra</button>
+            </div>
+            <input type="hidden" id="daSexo">
+          </div>
+
+          <!-- Edad aproximada -->
+          <div>
+            <label class="field-lbl">Edad aproximada</label>
+            <input type="text" id="daEdad" class="field-inp" placeholder="Ej: 2 años, 6 meses, Cachorro...">
+          </div>
+
+          <!-- Castrado -->
+          <div>
+            <label class="field-lbl">¿Está castrado/a?</label>
+            <div style="display:flex;gap:8px;">
+              <button class="type-sel" onclick="selectCastrado(this,'Sí')">✓ Sí</button>
+              <button class="type-sel" onclick="selectCastrado(this,'No')">✗ No</button>
+              <button class="type-sel" onclick="selectCastrado(this,'No sé')">? No sé</button>
+            </div>
+            <input type="hidden" id="daCastrado">
+          </div>
+
+          <!-- Vacunas -->
+          <div>
+            <label class="field-lbl">¿Tiene vacunas al día?</label>
+            <div style="display:flex;gap:8px;">
+              <button class="type-sel" onclick="selectVacunas(this,'Sí')">✓ Sí</button>
+              <button class="type-sel" onclick="selectVacunas(this,'No')">✗ No</button>
+              <button class="type-sel" onclick="selectVacunas(this,'No sé')">? No sé</button>
+            </div>
+            <input type="hidden" id="daVacunas">
+          </div>
+
+          <!-- Descripción -->
+          <div>
+            <label class="field-lbl">Descripción *</label>
+            <textarea id="daDesc" class="field-inp" rows="4" placeholder="Contanos sobre su personalidad, por qué lo das en adopción, si convive bien con otros animales o niños..."></textarea>
+          </div>
+
+          <!-- Tu contacto -->
+          <div>
+            <label class="field-lbl">Tu nombre y teléfono *</label>
+            <input type="text" id="daContacto" class="field-inp" placeholder="Ej: María — 099 123 456">
+          </div>
+
         </div>
 
-        <!-- Puntos de Recolección -->
-        <div class="recollection-box">
-          <strong>📦 Donaciones físicas en Durazno:</strong>
-          Podés donar ración, mantas, collares, bozales o medicamentos veterinarios en desuso llevándolos a:<br>
-          • <strong>Veterinaria Durazno:</strong> Calle Rivera 458 (Lunes a Sábado de 9 a 19hs)<br>
-          • <strong>Hogar de Tránsito Central:</strong> Barrio La Amarilla (coordinar por WhatsApp)
-        </div>
+        <!-- Botón enviar -->
+        <button onclick="enviarAdopcion()" style="
+          display:flex;align-items:center;justify-content:center;gap:10px;
+          width:100%;background:#25D366;color:#fff;
+          font-size:15px;font-weight:900;padding:16px;
+          border:none;cursor:pointer;
+          box-shadow:0 4px 14px rgba(37,211,102,.35);
+          margin-bottom:32px;
+          transition:opacity .15s;
+        ">
+          <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.99.583 3.842 1.585 5.395L2 22l4.737-1.56A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+          Enviar por WhatsApp
+        </button>
+
       </div>
     </div>
 
@@ -2320,8 +2437,7 @@
         <a href="#adopciones" class="nav-item" id="nav-adopciones">
           <div class="nav-icon">
             <svg width="24" height="24" viewBox="0 0 24 24">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
             </svg>
           </div>
           <span class="nav-label">Adopciones</span>
@@ -2348,13 +2464,12 @@
         </a>
         <a href="#nosotros" class="nav-item" id="nav-nosotros">
           <div class="nav-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24">
-              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
             </svg>
           </div>
-          <span class="nav-label">Nosotros</span>
+          <span class="nav-label">Dar en adopción</span>
         </a>
       </div>
     </nav>
@@ -2395,7 +2510,7 @@
     // ─── CONFIGURACIÓN GLOBAL ───
     const SHEET_ID = '2PACX-1vTIF_ruPvtTTRTgYdFGQ3z65JNGM-2TvNCdGAexzlExqP2H-mgg0xPDoFDQT81jwLKi8NFTJEoXJpn-';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?gid=0&single=true&output=csv`;
-    const GENERAL_WHATSAPP = '59891234567'; // Fallback de contacto general
+    const GENERAL_WHATSAPP = '59895541562'; // Fallback de contacto general
 
     // ─── MASCOTAS DE RESPALDO (OFFLINE / FALLBACK DE SEGURIDAD) ───
     const MOCK_PETS = [
@@ -2453,10 +2568,21 @@
     let activePet = null;
 
     // ─── ENRUTADOR SPA (HASH ROUTER) ───
+    const PAGE_TITLES = {
+      '#inicio':      'Inicio — Adopciones Durazno 🐾',
+      '#adopciones':  'Adopciones — Durazno 🐾',
+      '#alertas':     'Veterinarias — Durazno 🐾',
+      '#informacion': 'Información — Durazno 🐾',
+      '#nosotros':    'Dar en Adopción — Durazno 🐾',
+    };
+
     function router() {
       const hash = window.location.hash || '#inicio';
       const validHashes = ['#inicio', '#adopciones', '#alertas', '#informacion', '#nosotros'];
       const targetHash = validHashes.includes(hash) ? hash : '#inicio';
+
+      // Cambiar título de la pestaña
+      document.title = PAGE_TITLES[targetHash] || 'Adopciones Durazno 🐾';
 
       // Desactivar todas las secciones y navs
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -2475,6 +2601,12 @@
 
       // Cerrar modal si estuviera abierto al navegar
       closeModalDirect();
+
+      // Renderizar veterinarias cada vez que se activa esa sección
+      if (targetHash === '#alertas') {
+        renderVets(VETS);
+        updateVetStatusBar();
+      }
     }
 
     function navigateToTab(tabName) {
@@ -2752,7 +2884,7 @@
 
           <div class="pet-card-info">
             <div class="pet-card-name" style="color:var(--azul-oscuro);">${p.nombre}</div>
-            <div class="pet-card-breed">${p.especie} · ${p.edad} años</div>
+            <div class="pet-card-breed">${p.especie} · ${p.edad}</div>
             <div style="
               margin-top: 8px;
               font-size: 13px;
@@ -2783,7 +2915,7 @@
                onerror="handleImageError(this,'${fallbackImage}')">
           <div class="pet-card-info">
             <div class="pet-card-name">${p.nombre}</div>
-            <div class="pet-card-breed">${p.especie} · ${p.edad} años</div>
+            <div class="pet-card-breed">${p.especie} · ${p.edad}</div>
             <div class="pet-card-meta">
               <span class="meta-item">
                 <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
@@ -3242,12 +3374,7 @@
           <table style="width:100%;border-collapse:collapse;">${horariosRows}</table>
           <div style="padding:12px 16px;border-top:1px solid var(--borde);display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
             <div style="flex:1;min-width:0;">${tels}${email}</div>
-            <a href="https://wa.me/${vet.telefonos[0].replace(/\D/g,'').startsWith('09') ? '598'+vet.telefonos[0].replace(/\D/g,'').substring(1) : '598'+vet.telefonos[0].replace(/\D/g,'')}"
-               target="_blank"
-               style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;font-size:12px;font-weight:800;padding:8px 14px;text-decoration:none;flex-shrink:0;">
-              <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.99.583 3.842 1.585 5.395L2 22l4.737-1.56A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-              WhatsApp
-            </a>
+          
           </div>
         </div>
       </div>`;
@@ -3266,41 +3393,46 @@
       const container = document.getElementById('vetList');
       if (!container) return;
 
-      const abiertas = list.filter(v => isVetOpen(v));
-      const cerradas = list.filter(v => !isVetOpen(v));
+      // Siempre ordenar: abiertas primero, cerradas después
+      const abiertas = VETS.filter(v => isVetOpen(v));
+      const cerradas = VETS.filter(v => !isVetOpen(v));
+
+      // Si hay búsqueda activa, filtrar dentro de cada grupo
+      const q = (document.getElementById('vetSearch')?.value || '').toLowerCase().trim();
+      const filtrarGrupo = grupo => q
+        ? grupo.filter(v => v.nombre.toLowerCase().includes(q) || v.direccion.toLowerCase().includes(q))
+        : grupo;
+
+      const abiertasFiltradas = filtrarGrupo(abiertas);
+      const cerradasFiltradas = filtrarGrupo(cerradas);
 
       let html = '';
 
-      if (abiertas.length) {
+      if (abiertasFiltradas.length) {
         html += `<div style="font-size:12px;font-weight:800;color:var(--green);letter-spacing:.8px;text-transform:uppercase;padding:8px 0 10px;display:flex;align-items:center;gap:6px;">
           <span style="width:8px;height:8px;background:var(--green);display:inline-block;"></span>
-          Abiertas ahora (${abiertas.length})
+          Abiertas ahora (${abiertasFiltradas.length})
         </div>`;
-        html += abiertas.map(buildVetCard).join('');
+        html += abiertasFiltradas.map(buildVetCard).join('');
       }
 
-      if (cerradas.length) {
-        html += `<div style="font-size:12px;font-weight:800;color:var(--texto-light);letter-spacing:.8px;text-transform:uppercase;padding:${abiertas.length ? '16px' : '8px'} 0 10px;display:flex;align-items:center;gap:6px;">
+      if (cerradasFiltradas.length) {
+        html += `<div style="font-size:12px;font-weight:800;color:var(--texto-light);letter-spacing:.8px;text-transform:uppercase;padding:${abiertasFiltradas.length ? '16px' : '8px'} 0 10px;display:flex;align-items:center;gap:6px;">
           <span style="width:8px;height:8px;background:var(--texto-light);display:inline-block;"></span>
-          Cerradas ahora (${cerradas.length})
+          Cerradas ahora (${cerradasFiltradas.length})
         </div>`;
-        html += cerradas.map(buildVetCard).join('');
+        html += cerradasFiltradas.map(buildVetCard).join('');
       }
 
-      if (!list.length) {
-        html = `<div class="empty-state"><p>No se encontraron veterinarias.</p></div>`;
+      if (!abiertasFiltradas.length && !cerradasFiltradas.length) {
+        html = `<div class="empty-state"><p>No se encontraron veterinarias con esa búsqueda.</p></div>`;
       }
 
       container.innerHTML = html;
     }
 
     function filterVets() {
-      const q = (document.getElementById('vetSearch')?.value || '').toLowerCase().trim();
-      const filtered = q ? VETS.filter(v =>
-        v.nombre.toLowerCase().includes(q) ||
-        v.direccion.toLowerCase().includes(q)
-      ) : VETS;
-      renderVets(filtered);
+      renderVets(VETS);
     }
 
     function updateVetStatusBar() {
@@ -3320,6 +3452,64 @@
       }
     }
     window.addEventListener('hashchange', router);
+
+    // ─── DAR EN ADOPCIÓN — FORMULARIO ───
+    function selectEspecie(btn, val) {
+      btn.closest('div').querySelectorAll('.type-sel').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      document.getElementById('daEspecie').value = val;
+    }
+    function selectSexo(btn, val) {
+      btn.closest('div').querySelectorAll('.type-sel').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      document.getElementById('daSexo').value = val;
+    }
+    function selectCastrado(btn, val) {
+      btn.closest('div').querySelectorAll('.type-sel').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      document.getElementById('daCastrado').value = val;
+    }
+    function selectVacunas(btn, val) {
+      btn.closest('div').querySelectorAll('.type-sel').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      document.getElementById('daVacunas').value = val;
+    }
+
+    function enviarAdopcion() {
+      const nombre   = document.getElementById('daName').value.trim();
+      const especie  = document.getElementById('daEspecie').value;
+      const sexo     = document.getElementById('daSexo').value;
+      const edad     = document.getElementById('daEdad').value.trim();
+      const castrado = document.getElementById('daCastrado').value;
+      const vacunas  = document.getElementById('daVacunas').value;
+      const desc     = document.getElementById('daDesc').value.trim();
+      const contacto = document.getElementById('daContacto').value.trim();
+
+      if (!nombre || !especie || !sexo || !desc || !contacto) {
+        showToast('Completá los campos obligatorios (*)');
+        return;
+      }
+
+      const lineas = [
+        ' *ANIMAL PARA DAR EN ADOPCIÓN*',
+        '',
+        ` *Nombre:* ${nombre}`,
+        ` *Especie:* ${especie}`,
+        ` *Sexo:* ${sexo}`,
+        edad     ? ` *Edad:* ${edad}`            : null,
+        castrado ? ` *Castrado/a:* ${castrado}`  : null,
+        vacunas  ? ` *Vacunas:* ${vacunas}`       : null,
+        '',
+        ` *Descripción:*\n${desc}`,
+        '',
+        ` *Contacto:* ${contacto}`,
+        '',
+        '_Enviado desde adopciones.durazno_',
+      ].filter(l => l !== null).join('\n');
+
+      const url = `https://wa.me/59895541562?text=${encodeURIComponent(lineas)}`;
+      window.open(url, '_blank');
+    }
 
     // ─── INICIALIZACIÓN GLOBAL DE LA APLICACIÓN ───
     document.addEventListener('DOMContentLoaded', () => {
